@@ -1,15 +1,9 @@
 <template>
   <div class="wrapper">
-    <Ads
-    />
-    <About
-    />
-    <Settings 
-    
-    />
-    <GameStatistic
-     :gameOver="this.$store.state.gameOver"
-    />
+    <Ads />
+    <About />
+    <Settings />
+    <GameStatistic :gameOver="this.$store.state.gameOver" />
     <div class="">
       <div class="mt-6">
         <WordRow
@@ -17,42 +11,45 @@
           :key="i"
           :value="guess"
           :solution="this.$store.state.solution"
-          :submitted="this.$store.state.submitted && i < this.$store.state.currentGuessIndex"
+          :submitted="
+            this.$store.state.submitted &&
+            i < this.$store.state.currentGuessIndex
+          "
           :temp_colors="this.$store.state.colorList[i]"
         />
       </div>
       <div class="is-centered">
-         <KeyBoard
+        <KeyBoard
           @keypress="onKeyPress"
           @onKeyPress="onKeyPress"
           :guessedLetters="this.$store.state.guessedLetters"
           :input="input"
-          :key="componentKey"/>
+          :key="componentKey"
+        />
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
-import axios from 'axios';
-import WordRow from './WordRow.vue';
-import KeyBoard from './KeyBoard.vue';
-import About from './WordleAbout.vue'
-import Settings from './WordleSettings.vue';
-import GameStatistic from './GameStatistic.vue'
-import Ads from './WordleAds.vue';
-import { toast } from 'bulma-toast'
+import axios from "axios";
+import WordRow from "./WordRow.vue";
+import KeyBoard from "./KeyBoard.vue";
+import About from "./WordleAbout.vue";
+import Settings from "./WordleSettings.vue";
+import GameStatistic from "./GameStatistic.vue";
+import Ads from "./WordleAds.vue";
+import { toast } from "bulma-toast";
 
 export default {
-  name: 'Game',
+  name: "Game",
   components: {
     KeyBoard,
     WordRow,
     About,
     GameStatistic,
     Ads,
-    Settings
+    Settings,
   },
   data() {
     return {
@@ -60,41 +57,39 @@ export default {
       guessedLetters: {
         miss: [],
         found: [],
-        hint: []
+        hint: [],
       },
       componentKey: 0,
-    }
+    };
   },
   async beforeMount() {
-    await this.getData()
-    await this.getWords()
+    await this.getData();
+    await this.getWords();
   },
   mounted() {
-    window.addEventListener("keypress", (e) =>{
+    window.addEventListener("keypress", (e) => {
       e.preventDefault();
       let button =
         e.keyCode == 13
-         ? "{enter}"
-         : e.keyCode == 8
-         ? "{bksp}"
-         : String.fromCharCode(e.keyCode).toLowerCase();
-         this.onKeyPress(button.toLowerCase())
-    })
-    window.addEventListener("keyup", (e) =>{
+          ? "{enter}"
+          : e.keyCode == 8
+          ? "{bksp}"
+          : String.fromCharCode(e.keyCode).toLowerCase();
+      this.onKeyPress(button.toLowerCase());
+    });
+    window.addEventListener("keyup", (e) => {
       e.preventDefault();
-      let button =
-         e.keyCode == 8
-         ? "{bksp}"
-         : ""
-        this.onKeyPress(button)
-    })
-    document.title = "Wordle"
+      let button = e.keyCode == 8 ? "{bksp}" : "";
+      this.onKeyPress(button);
+    });
+    document.title = "Wordle";
   },
   methods: {
-
     async getData() {
       let formData = {
-        today: parseInt(localStorage.getItem("today")) ? parseInt(localStorage.getItem("today")) : 0,
+        today: parseInt(localStorage.getItem("today"))
+          ? parseInt(localStorage.getItem("today"))
+          : 0,
         victory: parseInt(localStorage.getItem("victoryPercentage"))
           ? parseInt(localStorage.getItem("victoryPercentage"))
           : 0,
@@ -104,10 +99,14 @@ export default {
         number_of_victory: parseInt(localStorage.getItem("numberOfVictory"))
           ? parseInt(localStorage.getItem("numberOfVictory"))
           : 0,
-        sequance_victory: parseInt(localStorage.getItem("numberOfsequenceVictory"))
+        sequance_victory: parseInt(
+          localStorage.getItem("numberOfsequenceVictory")
+        )
           ? parseInt(localStorage.getItem("numberOfsequenceVictory"))
           : 0,
-        sequance_victory_records: parseInt(localStorage.getItem("numberOfsequenceVictoryRecord"))
+        sequance_victory_records: parseInt(
+          localStorage.getItem("numberOfsequenceVictoryRecord")
+        )
           ? parseInt(localStorage.getItem("numberOfsequenceVictoryRecord"))
           : 0,
         current_guess_index: parseInt(localStorage.getItem("currentGuessIndex"))
@@ -147,20 +146,20 @@ export default {
           : false,
       };
 
-      var telegram_id = this.$route.params.telegram_id
+      var telegram_id = this.$route.params.telegram_id;
 
       await axios
         .post(`api/v1/daily-statistics/${telegram_id}`, formData)
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           let state = this.$store.state;
           let responseData = response.data;
           state.today = responseData.today;
 
           // getting data
-          state.guesses = JSON.parse(responseData.guesses)
+          state.guesses = JSON.parse(responseData.guesses);
           state.colorList = JSON.parse(responseData.color_list);
-          console.log(state.colorList)
+          console.log(state.colorList);
           state.currentGuessIndex = responseData.current_guess_index;
           state.guessedLetters = JSON.parse(responseData.guessed_letters);
           state.isFinished = responseData.is_finished;
@@ -176,113 +175,125 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },  
+    },
     async getWords() {
-      const now = new Date()
-      const start = new Date(2022, 7, 23)
-      const diff = Number(now) - Number(start)
+      const now = new Date();
+      const start = new Date(2022, 7, 23);
+      const diff = Number(now) - Number(start);
       let state = this.$store.state;
-      console.log(localStorage.getItem('color'))
-      let day = Math.floor(diff / (1000 * 60 * 60 * 24))
-      console.log(day)
-      if (state.today  < day) {
+      console.log(localStorage.getItem("color"));
+      let day = Math.floor(diff / (1000 * 60 * 60 * 24));
+      console.log(day);
+      if (state.today < day) {
         let formData = {
           today: day,
           current_guess_index: 0,
           color_list: JSON.stringify([
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                      ]),
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+          ]),
           guessed_letters: JSON.stringify({
-                              miss: [],
-                              found: [],
-                              hint: [],
-                            }),
+            miss: [],
+            found: [],
+            hint: [],
+          }),
           guesses: JSON.stringify(["", "", "", "", "", ""]),
           last_submitted: "",
           user_tries: JSON.stringify([
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                        ["", "", "", "", ""],
-                      ]),
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+            ["", "", "", "", ""],
+          ]),
           is_finished: false,
         };
 
-        var telegram_id = this.$route.params.telegram_id
+        var telegram_id = this.$route.params.telegram_id;
 
         await axios
           .put(`api/v1/daily-statistics/${telegram_id}`, formData)
           .then((response) => {
-            console.log(response.data)
-            
+            console.log(response.data);
+
             let responseData = response.data;
             state.today = responseData.today;
 
             // getting data
-            state.guesses = JSON.parse(responseData.guesses)
+            state.guesses = JSON.parse(responseData.guesses);
             state.colorList = JSON.parse(responseData.color_list);
             state.currentGuessIndex = responseData.current_guess_index;
             state.guessedLetters = JSON.parse(responseData.guessed_letters);
             state.isFinished = responseData.is_finished;
             state.lastSubmitted = responseData.last_submitted;
-            state.userTries = JSON.parse(responseData.user_tries),
-
-            // force render Keyboar comp.
-            this.componentKey+=1
+            (state.userTries = JSON.parse(responseData.user_tries)),
+              // force render Keyboar comp.
+              (this.componentKey += 1);
           })
           .catch((error) => {
             console.log(error);
           });
       }
       while (day > this.$store.state.words_list.length) {
-        day -= this.$store.state.words_list.length
+        day -= this.$store.state.words_list.length;
       }
-      console.log(this.$store.state.words_list[day])
-      console.log(state.currentGuessIndex)
-      this.$store.state.solution = this.$store.state.words_list[day]
-      return this.$store.state.words_list[day]
+      console.log(this.$store.state.words_list[day]);
+      console.log(state.currentGuessIndex);
+      this.$store.state.solution = this.$store.state.words_list[day];
+      return this.$store.state.words_list[day];
     },
     onKeyPress(button) {
-      const guesses = this.$store.state.guesses
-      const currentGuessIndex = this.$store.state.currentGuessIndex
-      const currentGuess = guesses[currentGuessIndex]
-      if (currentGuessIndex >= 6 || this.$store.state.lastSubmitted==this.$store.state.solution) {
+      const guesses = this.$store.state.guesses;
+      const currentGuessIndex = this.$store.state.currentGuessIndex;
+      const currentGuess = guesses[currentGuessIndex];
+      if (
+        currentGuessIndex >= 6 ||
+        this.$store.state.lastSubmitted == this.$store.state.solution
+      ) {
         return;
       }
       if (button == "{enter}") {
-        this.$store.state.submitted = true
+        this.$store.state.submitted = true;
         if (currentGuess.length == 5) {
-          if (this.$store.state.words_list.includes(this.$store.state.guesses[currentGuessIndex])) {
+          if (
+            this.$store.state.words_list.includes(
+              this.$store.state.guesses[currentGuessIndex]
+            )
+          ) {
             this.$store.state.currentGuessIndex++;
-            localStorage.setItem('currentGuessIndex', parseInt(this.$store.state.currentGuessIndex))
-            for (var i = 0; i < currentGuess.length; i ++) {
+            localStorage.setItem(
+              "currentGuessIndex",
+              parseInt(this.$store.state.currentGuessIndex)
+            );
+            for (var i = 0; i < currentGuess.length; i++) {
               let c = currentGuess.charAt(i);
               if (c == this.$store.state.solution.charAt(i)) {
-                this.$store.state.guessedLetters.found.push(c)
+                this.$store.state.guessedLetters.found.push(c);
               } else if (this.$store.state.solution.indexOf(c) != -1) {
                 this.$store.state.guessedLetters.hint.push(c);
               } else {
                 this.$store.state.guessedLetters.miss.push(c);
               }
             }
-            localStorage.setItem('guessedLetters', JSON.stringify(this.$store.state.guessedLetters))
+            localStorage.setItem(
+              "guessedLetters",
+              JSON.stringify(this.$store.state.guessedLetters)
+            );
           } else {
             toast({
-                message: "Бундай сўз рўйхатда мавжуд эмас",
-                type: 'is-warning',
-                dismissible: false,
-                animate: { in: 'shakeX'},
-                pauseOnHover: false,
-                duration: 2000,
-                position: 'top-center',
-            })
+              message: "Бундай сўз рўйхатда мавжуд эмас",
+              type: "is-warning",
+              dismissible: false,
+              animate: { in: "shakeX" },
+              pauseOnHover: false,
+              duration: 2000,
+              position: "top-center",
+            });
           }
         }
       } else if (button == "{bksp}") {
@@ -294,9 +305,6 @@ export default {
         }
       }
     },
-  }
-}
+  },
+};
 </script>
-
-<style>
-</style>

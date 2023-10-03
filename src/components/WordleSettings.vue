@@ -59,8 +59,7 @@ const toogleDark = useToggle(isDark);
 export default {
   name: "Settings",
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     isActive: Boolean,
