@@ -112,16 +112,17 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 .simple-keyboard.hg-theme-default.myTheme {
-  background: gray;
+  background: none;
   margin-top: 31px;
   max-width: 650px;
 }
 
 .simple-keyboard.hg-layout-default .hg-button.key-bg {
-  background: #d3d6da;
+  color: #000000;
   font-weight: bold;
+  background: #d3d6da;
 }
 
 .simple-keyboard.hg-layout-default .hg-button.is-warning {

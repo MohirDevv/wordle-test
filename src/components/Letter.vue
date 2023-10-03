@@ -56,7 +56,7 @@ export default {
   transform: scale(1.05);
 }
 .border-gray-500 {
-  border-color: #000000 !important;
+  border-color: #878a8c !important;
 }
 .has-background-warning {
   background: #c9b458 !important;
@@ -74,7 +74,7 @@ export default {
   width: 60px;
   height: 60px;
   font-size: 2rem;
-  border: 2px solid #d3d6da;
+  border: 2.4px solid #d3d6da;
   box-sizing: border-box;
   text-transform: uppercase;
   margin: 2px;
