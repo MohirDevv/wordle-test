@@ -3,6 +3,7 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import axios from 'axios'
+import './assets/tailwind.css'
 
 // axios.defaults.baseURL = 'https://cp.wordlebot.uz'
 // axios.defaults.baseURL = 'http://127.0.0.1:8000/'

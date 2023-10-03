@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="letter-border has-text-centered has-text-weight-bold "
+        class="letter-border has-text-centered has-text-weight-bold dark:border-white"
         :class="{
             'border-gray-500':
                 color == '' &&

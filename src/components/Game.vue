@@ -4,7 +4,8 @@
     />
     <About
     />
-    <Settings
+    <Settings 
+    
     />
     <GameStatistic
      :gameOver="this.$store.state.gameOver"
@@ -90,6 +91,7 @@ export default {
     document.title = "Wordle"
   },
   methods: {
+
     async getData() {
       let formData = {
         today: parseInt(localStorage.getItem("today")) ? parseInt(localStorage.getItem("today")) : 0,

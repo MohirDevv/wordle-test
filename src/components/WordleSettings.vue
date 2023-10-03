@@ -5,9 +5,9 @@
   >
     <div class="modal-background"></div>
     <div class="modal-card game-settings">
-      <section class="modal-card-body main">
+      <section class="modal-card-body bg-white dark:bg-black">
         <div class="sideHeader">
-          <h1>Созламалар</h1>
+          <h1 class="dark:text-white">Созламалар</h1>
 
           <button
             class="delete is-pulled-right"
@@ -18,43 +18,48 @@
 
         <div class="modes">
           <div class="darkmode">
-            <p>Darkmode 🌙</p>
+            <p class="dark:text-white">Darkmode 🌙</p>
             <div class="switch__container">
               <input
                 id="switch-shadow"
                 class="switch switch--shadow darktoggle"
                 type="checkbox"
-                @click="checkDaBox()"
-                v-model="isDark"
+                @click="toogleDark()"
               />
               <label for="switch-shadow"></label>
             </div>
           </div>
 
           <div class="endlessmode">
-            <p>Test yourself 🦾</p>
+            <p class="dark:text-white">Test yourself 🦾</p>
             <button>
-              <a href="http://localhost:8080/mode=unlim/3322444"
+              <a class="px-2" href="http://localhost:8080/mode=unlim/3322444"
                 >Endless Mode 🔄</a
               >
             </button>
           </div>
 
           <div class="testmode">
-            <p>???</p>
-            <button>???</button>
+            <p class="dark:text-white">???</p>
+            <button class="px-2">???</button>
           </div>
         </div>
       </section>
     </div>
   </div>
 </template>
+
+<script setup>
+import { useDark, useToggle } from "@vueuse/core";
+const isDark = useDark();
+const toogleDark = useToggle(isDark);
+</script>
+
 <script>
 export default {
   name: "Settings",
   data() {
     return {
-      isDark: false,
     };
   },
   props: {
@@ -66,63 +71,11 @@ export default {
     removeSettings() {
       this.$store.state.SettingStatus = false;
     },
-    checkDaBox() {
-      const checkbox = document.querySelector(".darktoggle");
-      const modal = document.querySelector(".main");
-      // const modes = document.querySelector('.modes');
-      // const sideHeader = document.querySelector('.sideHeader');
-      // const header = document.querySelector('.header');
-      // const headerH1 = document.querySelector('.title');
-      // const menu = document.querySelector('.icon-menu');
-      // const cube = document.querySelector('.wrapper');
-      // const keyboard = document.querySelector('.keyboard');
-      // const instructions = document.querySelector('.about');
-      // const extra = document.querySelector('.strong');
-      // const stats = document.querySelector('.stats');
-      // const rows = document.querySelector('.myTheme');
-
-      checkbox.addEventListener("change", function () {
-        if (this.checked) {
-          modal.classList.add('dark')
-          // modes.classList.add('dark')
-          // sideHeader.classList.add('dark')
-          // header.classList.add('dark')
-          // headerH1.classList.add('dark')
-          // menu.classList.add('darkHeader')
-          // cube.classList.add('dark')
-          // keyboard.classList.add('dark')
-          // instructions.classList.add('dark')
-          // extra.classList.add('dark')
-          // stats.classList.add('dark')
-          // rows.classList.add('dark')
-          
-          this.isDark = true
-          console.log("Checkbox is checked..");
-          console.log(this.isDark);
-        } else {
-          console.log("Checkbox is not checked..");
-          modal.classList.remove('dark')
-          // modes.classList.remove('dark')
-          // sideHeader.classList.remove('dark')
-          // header.classList.remove('dark')
-          // headerH1.classList.remove('dark')
-          // menu.classList.remove('darkHeader')
-          // cube.classList.remove('dark')
-          // keyboard.classList.remove('dark')
-          // instructions.classList.remove('dark')
-          // extra.classList.remove('dark')
-          // stats.classList.remove('dark')
-          // rows.classList.remove('dark')
-          this.isDark = false
-          console.log(this.isDark);
-        }
-      });
-    },
   },
 };
 </script>
 
-<style >
+<style scoped>
 .sideHeader {
   display: flex;
   align-items: center;
@@ -148,18 +101,6 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 20px;
-}
-
-.dark{
-  background: #000;
-  color: white;
-  background-color: #000;
-}
-
-.darkHeader{
-  background-color: white;
-  border: 1px #b5b9bb solid;
-  border-radius: 8px;
 }
 
 .darkmode p {

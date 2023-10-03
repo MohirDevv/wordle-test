@@ -1,5 +1,5 @@
 <template>
-    <div class="simple-keyboard keyboard"></div>
+    <div class="simple-keyboard"></div>
 </template>
 
 <script>
@@ -97,9 +97,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style> 
   .simple-keyboard.hg-theme-default.myTheme {
-      background: #fff;
+      background: gray;
       margin-top: 31px;
       max-width: 650px;
   }
