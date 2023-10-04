@@ -6,7 +6,7 @@
     <div class="modal-background"></div>
     <div class="">
       <div class="modal-card info pb-5">
-        <section class="modal-card-body rounded-md dark:bg-black">
+        <section class="modal-card-body rounded-md dark:bg-[#252525] dark:border-[#3c3c3c]">
           <button
             class="delete is-pulled-right"
             @click="removeStat"

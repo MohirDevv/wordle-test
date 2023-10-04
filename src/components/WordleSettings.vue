@@ -5,7 +5,7 @@
   >
     <div class="modal-background"></div>
     <div class="modal-card game-settings">
-      <section class="modal-card-body bg-white dark:bg-black">
+      <section class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]">
         <div class="sideHeader">
           <h1 class="dark:text-white">Созламалар</h1>
 
@@ -19,15 +19,17 @@
         <div class="modes">
           <div class="darkmode">
             <p class="dark:text-white">Darkmode 🌙</p>
-            <div class="switch__container">
+            <!-- <div class="switch__container">
               <input
                 id="switch-shadow"
                 class="switch switch--shadow darktoggle"
                 type="checkbox"
-                @click="toogleDark()"
+                @click="toogleDark(), isDarkValid()"
+                
               />
               <label for="switch-shadow"></label>
-            </div>
+            </div> -->
+            <button class="px-2" @click="toogleDark()"><p>On/Off Darkmode</p></button>
           </div>
 
           <div class="endlessmode">
@@ -104,6 +106,14 @@ export default {
 
 .darkmode p {
   font-weight: 600;
+}
+
+.darkmode button {
+  background: #fc6600;
+  border-radius: 6px;
+  border: 2px #ff7417 solid;
+  color: white;
+  cursor: pointer;
 }
 
 .endlessmode {

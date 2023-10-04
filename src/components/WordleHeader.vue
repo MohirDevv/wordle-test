@@ -1,5 +1,5 @@
 <template>
-  <div class="header dark:bg-black">
+  <div class="header dark:bg-[#252525]">
     <div class="title is-size-6-mobile mt-5 dark:text-white">@WordleUzBot</div>
     <div class="icon-menu gap-1 rounded-md">
       <button
