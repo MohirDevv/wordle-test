@@ -1,6 +1,6 @@
 <template>
   <div
-    class="letter-border has-text-centered has-text-weight-bold dark:border-white"
+    class="letter-border has-text-centered has-text-weight-bold dark:border-[#3a3a3c] dark:text-white"
     :class="{
       'border-gray-500': color == '' && letter.length > 0,
       '': !pulse,
@@ -66,6 +66,10 @@ export default {
   background: #787c7e !important;
   border-color: #787c7e !important;
 }
+.dark .has-background-grey-light {
+  background: #3a3a3c !important;
+  border-color: #3a3a3c !important;
+}
 .has-background-success {
   background: #6aaa64 !important;
   border-color: #6aaa64 !important;
@@ -79,6 +83,7 @@ export default {
   text-transform: uppercase;
   margin: 2px;
 }
+
 @media only screen and (max-width: 500px) {
   .letter-border {
     width: 50px;

@@ -32,8 +32,8 @@ export default {
         default: [
           "Ё Й Ц У К Е Н Г Ш Ў З Х Ъ",
           "Ф Қ В А П Р О Л Д Ж Э",
-          "Я Ч С М И Т Ь Б Ю Ғ Ҳ {bksp}",
-          "{enter}",
+          "{enter} Я Ч С М И Т Ь Б Ю Ғ Ҳ {bksp}",
+          // "{enter}",
         ],
       },
       display: {
@@ -118,36 +118,52 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 .simple-keyboard.hg-theme-default.myTheme {
-  background: #fff;
+  background: none;
   margin-top: 31px;
-  max-width: 650px;
+  max-width: 550px;
 }
 
+.hg-theme-default .hg-button{
+  border-bottom: none;
+}
 .simple-keyboard.hg-layout-default .hg-button.key-bg {
-  color: #000;
+  color: black;
   background: #d3d6da;
+  font-weight: bold;
+}
+.dark .simple-keyboard.hg-layout-default .hg-button.key-bg {
+  color: white;
+  background: #818384;
   font-weight: bold;
 }
 
 .simple-keyboard.hg-layout-default .hg-button.is-warning {
   background: #c9b458 !important;
-  color: black;
+  color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.is-dark {
-  background: #787c7e !important;
-  color: black;
+  background: #787c7e ;
+  color: white;
+}
+.dark .simple-keyboard.hg-layout-default .hg-button.is-dark {
+  background: #3a3a3c ;
+  color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.is-success {
-  background: #6aaa64 !important;
-  color: black;
+  background: #6aaa64 ;
+  color: white ;
 }
-.simple-keyboard.hg-layout-default .hg-button.is-success:last-child {
+.dark .simple-keyboard.hg-layout-default .hg-button.is-success {
+  background: #6aaa64 ;
+  color: white ;
+}
+/* .simple-keyboard.hg-layout-default .hg-button.is-success:last-child {
+  background: #d3d6da !important;
   background: #6aaa64 !important;
-  color: white;
   font-weight: 700;
   font-size: 20px;
   letter-spacing: 0.2px;
-}
+} */
 
 .simple-keyboard.hg-layout-default .hg-button.reset-color {
   background: #d3d6da !important;
@@ -156,7 +172,7 @@ export default {
 }
 
 .simple-keyboard.hg-layout-default .hg-button.df-warning {
-  background: #c9b458;
+  background: #c9b458 !important;
   color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.df-dark {
@@ -164,7 +180,7 @@ export default {
   color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.df-success {
-  background: #6aaa64;
+  background: #6aaa64 !important;
   color: white;
 }
 
@@ -175,8 +191,8 @@ export default {
 }
 @media only screen and (min-width: 320px) and (max-width: 359px) {
   .letter-border {
-    width: 27.59px;
-    height: 27.59px;
+    width: 29.59px;
+    height: 29.59px;
     /* box-sizing: border-box; */
     line-height: 23px;
     font-size: 20px;

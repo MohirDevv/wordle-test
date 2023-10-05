@@ -37,6 +37,7 @@ export default {
       },
       display: {
         "{bksp}": "⌫",
+        // "{enter}": "Enter",
         "{enter}": "Текшириш",
       },
       buttonTheme: [
@@ -116,13 +117,20 @@ export default {
 .simple-keyboard.hg-theme-default.myTheme {
   background: none;
   margin-top: 31px;
-  max-width: 650px;
+  max-width: 550px;
 }
 
+.hg-theme-default .hg-button{
+  border-bottom: none;
+}
 .simple-keyboard.hg-layout-default .hg-button.key-bg {
-  color: #000000;
+  color: black;
   font-weight: bold;
   background: #d3d6da;
+}
+.dark .simple-keyboard.hg-layout-default .hg-button.key-bg {
+  font-weight: bold;
+  background: #818384;
 }
 
 .simple-keyboard.hg-layout-default .hg-button.is-warning {
@@ -130,7 +138,7 @@ export default {
   color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.is-dark {
-  background: #787c7e !important;
+  background: #787c7e ;
   color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.is-success {
@@ -147,7 +155,7 @@ export default {
   color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.df-success {
-  background: #6aaa64;
+  background: #6aaa64 !important;
   color: white;
 }
 
@@ -155,20 +163,67 @@ export default {
   .simple-keyboard.hg-theme-default.myTheme {
     margin-top: 30px;
   }
+  .hg-theme-default .hg-row:nth-child(2) {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
 }
 @media only screen and (min-width: 320px) and (max-width: 359px) {
   .letter-border {
-    width: 27.59px;
-    height: 27.59px;
+    width: 29.59px;
+    height: 29.59px;
     /* box-sizing: border-box; */
     line-height: 23px;
     font-size: 20px;
     /* text-align: center; */
   }
+  .hg-theme-default .hg-row:nth-child(2) {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
 }
 @media only screen and (min-width: 400px) and (max-width: 430px) {
   .simple-keyboard.hg-theme-default.myTheme {
-    margin-top: 90px;
+    margin-top: 80px;
   }
+  .hg-theme-default .hg-row:nth-child(2) {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 9px;
+  margin-bottom: 9px;
 }
+}
+</style>
+
+<style>
+/* .is-success.hg-button,
+.is-dark.hg-button,
+.is-warning.hg-button {
+  color: white !important;
+} */
+
+.hg-theme-default .hg-row:nth-child(2) {
+  padding-left: 25px;
+  padding-right: 25px;
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
+
+.dark .simple-keyboard.hg-layout-default .hg-button.df-dark{
+  background: #3a3a3c !important;
+}
+
+.hg-theme-default .hg-button.hg-standardBtn{
+  height: 42px;
+}
+.hg-button.hg-functionBtn.hg-button-bksp.key-bg{
+  height: 42px ;
+}
+/* .hg-button.hg-functionBtn.hg-button-enter.key-bg{
+  color: white !important;
+} */
 </style>
