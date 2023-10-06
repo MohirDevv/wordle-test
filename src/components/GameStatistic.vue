@@ -18,10 +18,15 @@
               Бугунги сўз:
             </p>
             <p
-              class="has-text-bold has-text-centered is-uppercase is-size-4 dark:text-white"
+              class="has-text-bold has-text-centered is-uppercase is-size-4 px-2 rounded-md mt-2 bg-[#6aaa64] text-white dark:bg-[#538d4e]"
+              v-if="this.$store.state.gameOver"
             >
               {{ this.$store.state.solution }}
             </p>
+            <p class="text-[27px] dark:text-white"
+            v-show="this.$store.state.gameOver == false">
+            ???
+          </p>
           </div>
 
           <br />

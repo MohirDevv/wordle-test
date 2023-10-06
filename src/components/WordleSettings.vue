@@ -5,7 +5,9 @@
   >
     <div class="modal-background"></div>
     <div class="modal-card game-settings">
-      <section class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]">
+      <section
+        class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]"
+      >
         <div class="sideHeader">
           <h1 class="dark:text-white">Созламалар</h1>
 
@@ -17,34 +19,39 @@
         </div>
 
         <div class="modes">
-          <div class="darkmode">
-            <p class="dark:text-white">Darkmode 🌙</p>
-            <!-- <div class="switch__container">
+          <div class="darkmode w-full flex items-center justify-between border-[#d3d6da] border-b-2 pb-3
+          dark:border-[#3a3a3c]">
+            <p class="dark:text-white">Dark Theme</p>
+            <div class="switch__container mr-4">
               <input
+              :checked="theme === 'auto' ? true : false"
                 id="switch-shadow"
                 class="switch switch--shadow darktoggle"
                 type="checkbox"
-                @click="toogleDark(), isDarkValid()"
-                
-              />
+                @click="toogleDark()"
+                />
               <label for="switch-shadow"></label>
-            </div> -->
-            <button class="px-2" @click="toogleDark()"><p>On/Off Darkmode</p></button>
+            </div>
+            <!-- <button class="px-2" @click="toogleDark()"><p>On/Off Darkmode</p></button> -->
           </div>
 
-          <div class="endlessmode">
+          <div class="endlessmode w-full flex justify-between items-center border-[#d3d6da] border-b-2 pb-3
+          dark:border-[#3a3a3c]">
             <p class="dark:text-white">Test yourself 🦾</p>
-            <button>
-              <a class="px-2" href="http://localhost:8080/mode=unlim/3322444"
-                >Endless Mode 🔄</a
-              >
+            <button class="text-[18px]">
+              <a class="px-2" href="http://localhost:8080/mode=unlim/3322444">
+                Unlim Mode
+              </a>
             </button>
           </div>
 
-          <div class="testmode">
-            <p class="dark:text-white">???</p>
-            <button class="px-2">???</button>
+          <div class="testmode w-full flex items-center justify-between border-[#d3d6da] border-b-2 pb-3 dark:border-[#3a3a3c]">
+            <p class="dark:text-white">Report a bug</p>
+            <button class="text-white px-2 text-[18px]"><a target="_blank" href="https://t.me/WordleAdminBot">Admin</a></button>
           </div>
+          <!-- <div class="info w-full flex items-center justify-evenly">
+            <img class="bg-white p-1 rounded-sm" src="../assets/redmedia.972daf90.svg" alt="#"> <span class="text-[15px] font-medium dark:text-white"> IT-компанияси томонидан ишлаб чиқилди</span>
+          </div> -->
         </div>
       </section>
     </div>
@@ -61,18 +68,20 @@ const toogleDark = useToggle(isDark);
 export default {
   name: "Settings",
   data() {
-    return {};
+    return {
+      theme: localStorage.getItem('vueuse-color-scheme'),
+    };
   },
   props: {
     isActive: Boolean,
   },
   setup() {},
-  mounted() {},
   methods: {
     removeSettings() {
       this.$store.state.SettingStatus = false;
     },
   },
+  mounted() {},
 };
 </script>
 
@@ -97,13 +106,6 @@ export default {
   padding-top: 20px;
 }
 
-.darkmode {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-
 .darkmode p {
   font-weight: 600;
 }
@@ -114,13 +116,6 @@ export default {
   border: 2px #ff7417 solid;
   color: white;
   cursor: pointer;
-}
-
-.endlessmode {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
 }
 
 .endlessmode button {
@@ -137,12 +132,6 @@ export default {
 
 .endlessmode p {
   font-weight: 600;
-}
-.testmode {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
 }
 
 .testmode p {

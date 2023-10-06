@@ -7,11 +7,11 @@
       scale: pulse,
       'has-background-grey-light has-text-white animate__animated animate__flipInX':
         color == 'gray',
-      'has-background-success	has-text-white animate__animated animate__flipInX':
+        'has-background-success	has-text-white animate__animated animate__flipInX':
         color == 'green',
-      'has-background-warning has-text-white animate__animated animate__flipInX':
+        'has-background-warning has-text-white animate__animated animate__flipInX':
         color == 'yellow',
-    }"
+      }"
   >
     {{ letter }}
   </div>
@@ -33,9 +33,15 @@ export default {
   data() {
     return {
       pulse: false,
+      // bksp: `<i class="far fa-backspace"></i>`,
     };
   },
-
+  // methods: {
+  //   addIcon() {
+  //     this.bksp.innerHTML = ''
+  //   }
+  // },
+  
   watch: {
     letter: {
       handler(letter) {
@@ -74,11 +80,15 @@ export default {
   background: #6aaa64 !important;
   border-color: #6aaa64 !important;
 }
+.dark .has-background-success {
+  background: #538d4e !important;
+  border-color: #538d4e !important;
+}
 .letter-border {
   width: 60px;
   height: 60px;
   font-size: 2rem;
-  border: 2.4px solid #d3d6da;
+  border: 2px solid #d3d6da;
   box-sizing: border-box;
   text-transform: uppercase;
   margin: 2px;

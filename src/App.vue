@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper min-h-[100vh] dark:bg-[#252525]">
+  <div class="wrapper min-h-[100vh] dark:bg-[#121213]">
     <Header />
     <router-view />
   </div>

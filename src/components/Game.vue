@@ -181,9 +181,9 @@ export default {
       const start = new Date(2022, 7, 23);
       const diff = Number(now) - Number(start);
       let state = this.$store.state;
-      console.log(localStorage.getItem("color"));
+      // console.log(localStorage.getItem("color"));
       let day = Math.floor(diff / (1000 * 60 * 60 * 24));
-      console.log(day);
+      // console.log(day);
       if (state.today < day) {
         let formData = {
           today: day,
@@ -242,8 +242,8 @@ export default {
       while (day > this.$store.state.words_list.length) {
         day -= this.$store.state.words_list.length;
       }
-      console.log(this.$store.state.words_list[day]);
-      console.log(state.currentGuessIndex);
+      // console.log(this.$store.state.words_list[day]);
+      // console.log(state.currentGuessIndex);
       this.$store.state.solution = this.$store.state.words_list[day];
       return this.$store.state.words_list[day];
     },

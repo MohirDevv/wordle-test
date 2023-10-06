@@ -10,6 +10,7 @@ export default {
   data: () => ({
     keyboard: null,
     componentKey: 0,
+    
   }),
   name: "KeyBoard",
   props: {
@@ -33,7 +34,6 @@ export default {
           "Ё Й Ц У К Е Н Г Ш Ў З Х Ъ",
           "Ф Қ В А П Р О Л Д Ж Э",
           "{enter} Я Ч С М И Т Ь Б Ю Ғ Ҳ {bksp}",
-          // "{enter}",
         ],
       },
       display: {
@@ -157,13 +157,6 @@ export default {
   background: #6aaa64 ;
   color: white ;
 }
-/* .simple-keyboard.hg-layout-default .hg-button.is-success:last-child {
-  background: #d3d6da !important;
-  background: #6aaa64 !important;
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 0.2px;
-} */
 
 .simple-keyboard.hg-layout-default .hg-button.reset-color {
   background: #d3d6da !important;
