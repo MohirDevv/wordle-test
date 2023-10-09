@@ -32,7 +32,6 @@
                 />
               <label for="switch-shadow"></label>
             </div>
-            <!-- <button class="px-2" @click="toogleDark()"><p>On/Off Darkmode</p></button> -->
           </div>
 
           <div class="endlessmode w-full flex justify-between items-center border-[#d3d6da] border-b-2 pb-3
@@ -45,7 +44,7 @@
             </button>
           </div>
 
-          <div class="testmode w-full flex items-center justify-between border-[#d3d6da] border-b-2 pb-3 dark:border-[#3a3a3c]">
+          <div class="testmode w-full flex items-center justify-between">
             <p class="dark:text-white">Report a bug</p>
             <button class="text-white px-2 text-[18px]"><a target="_blank" href="https://t.me/WordleAdminBot">Admin</a></button>
           </div>
