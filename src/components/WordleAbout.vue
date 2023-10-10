@@ -3,9 +3,9 @@
     class="modal p-6 animate__animated"
     :class="{ 'is-active animate__fadeIn': this.$store.state.aboutStatus }"
   >
-    <div class="modal-background"></div>
+    <div class="modal-background" @click="removeAbout"></div>
     <div class="modal-card game-help">
-      <section class="modal-card-body rounded-md dark:bg-[#252525] dark:border-[#3c3c3c]">
+      <section class="modal-card-body rounded-md dark:bg-[#252525] ">
         <button
           class="delete is-pulled-right"
           @click="removeAbout"
@@ -192,7 +192,6 @@ export default {
 }
 
 .modal-card-body {
-  border: 2px #b5b9bb solid;
   border-radius: 6px;
 }
 </style>

@@ -3,17 +3,18 @@
     class="modal p-6 animate__animated"
     :class="{ 'is-active animate__fadeIn': this.$store.state.SettingStatus }"
   >
-    <div class="modal-background"></div>
+    <div class="modal-background" @click="removeSettings()"></div>
     <div class="modal-card game-settings">
       <section
         class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]"
+        
       >
         <div class="sideHeader">
           <h1 class="dark:text-white">Созламалар</h1>
 
           <button
             class="delete is-pulled-right"
-            @click="removeSettings"
+            @click="removeSettings()"
             aria-label="close"
           ></button>
         </div>
@@ -174,7 +175,7 @@ export default {
 }
 
 .modal-card-body {
-  border: 2px #b5b9bb solid;
+  /* border: 2px #b5b9bb solid; */
   border-radius: 6px;
 }
 
@@ -198,7 +199,7 @@ export default {
 
 .switch--shadow + label {
   padding: 2px;
-  width: 44px;
+  width: 40px;
   height: 20px;
   border-radius: 10px;
   border: none;
@@ -215,13 +216,13 @@ export default {
 }
 .switch--shadow + label:before {
   right: 1px;
-  background-color: #f1f1f1;
+  background-color: #878a8c;
   border-radius: 10px;
   border: none;
   transition: background 0.4s;
 }
 .switch--shadow + label:after {
-  width: 20px;
+  width: 19px;
   height: 18px;
   background-color: #fff;
   border-radius: 100%;
@@ -232,6 +233,6 @@ export default {
   background-color: #8ce196;
 }
 .switch--shadow:checked + label:after {
-  transform: translateX(22px);
+  transform: translateX(18px);
 }
 </style>

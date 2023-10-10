@@ -177,24 +177,24 @@ export default {
   color: white;
 }
 
-@media only screen and (max-width: 350px) {
+/* @media only screen and (max-width: 350px) {
   .simple-keyboard.hg-theme-default.myTheme {
     margin-top: 30px;
   }
-}
+} */
 @media only screen and (min-width: 320px) and (max-width: 359px) {
-  .letter-border {
+  /* .letter-border {
     width: 29.59px;
     height: 29.59px;
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
     line-height: 23px;
     font-size: 20px;
-    /* text-align: center; */
-  }
+    text-align: center;
+  } */
 }
 @media only screen and (min-width: 400px) and (max-width: 430px) {
-  .simple-keyboard.hg-theme-default.myTheme {
+  /* .simple-keyboard.hg-theme-default.myTheme {
     margin-top: 90px;
-  }
+  } */
 }
 </style>

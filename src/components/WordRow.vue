@@ -9,6 +9,7 @@
         :key="i"
         :letter="value[i - 1]"
         :color="temp_colors[i - 1]"
+        :id="isFound ? `letter${i}` : ''"
       />
     </div>
   </div>
@@ -40,6 +41,7 @@ export default {
         "УДДАЛАДИК",
       ],
       gameOver: false,
+      isFound: false,
     };
   },
   components: {
@@ -76,6 +78,18 @@ export default {
     },
   },
   watch: {
+    isFound(newVal) {
+      if (newVal) {
+        setTimeout(() => {
+          for (let i = 0; i < 5; i++) {
+            const el = document.getElementById(`letter${i + 1}`);
+            setTimeout(() => {
+              el.classList.add("bounce2");
+            }, 100 * i);
+          }
+        }, 1);
+      }
+    },
     submitted: {
       async handler(submitted) {
         if (submitted) {
@@ -122,6 +136,7 @@ export default {
           );
 
           if (s == v) {
+            this.isFound = true;
             localStorage.setItem("lastSubmitted", s);
             this.$store.commit("setIsWinner", true);
             this.gameOver = true;
@@ -188,3 +203,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.letter-border{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

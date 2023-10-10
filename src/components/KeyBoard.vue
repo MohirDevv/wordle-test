@@ -120,7 +120,7 @@ export default {
 <style>
 .bksp {
   background: url('data:image/svg+xml,<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" class="game-icon" data-testid="icon-backspace"><path fill="var(--color-tone-1)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path></svg>') no-repeat center, #d3d6da !important;
-  min-width: 30px;
+  min-width: 44px;
 }
 
 .dark .bksp{
@@ -192,13 +192,16 @@ export default {
   }
 }
 @media only screen and (min-width: 320px) and (max-width: 359px) {
-  .letter-border {
+  /* .letter-border {
     width: 27.59px;
     height: 27.59px;
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
     line-height: 23px;
     font-size: 20px;
-    /* text-align: center; */
+    text-align: center;
+  } */
+  .simple-keyboard.hg-theme-default.myTheme {
+    margin-top: 40px;
   }
   .hg-theme-default .hg-row:nth-child(2) {
     padding-left: 20px;
@@ -208,9 +211,9 @@ export default {
   }
 }
 @media only screen and (min-width: 400px) and (max-width: 430px) {
-  .simple-keyboard.hg-theme-default.myTheme {
-    margin-top: 80px;
-  }
+  /* .simple-keyboard.hg-theme-default.myTheme {
+    margin-top: 30px;
+  } */
   .hg-theme-default .hg-row:nth-child(2) {
     padding-left: 20px;
     padding-right: 20px;

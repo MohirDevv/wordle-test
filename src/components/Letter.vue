@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div
     class="letter-border has-text-centered has-text-weight-bold dark:border-[#3a3a3c] dark:text-white"
     :class="{
@@ -33,15 +33,8 @@ export default {
   data() {
     return {
       pulse: false,
-      // bksp: `<i class="far fa-backspace"></i>`,
     };
   },
-  // methods: {
-  //   addIcon() {
-  //     this.bksp.innerHTML = ''
-  //   }
-  // },
-  
   watch: {
     letter: {
       handler(letter) {
@@ -103,12 +96,21 @@ export default {
     font-size: 25px;
   }
 }
-@media only screen and (min-width: 320px) and (max-width: 359px) {
+/* @media only screen and (min-width: 320px) and (max-width: 359px) {
   .letter-border {
     width: 27.59px;
     height: 27.59px;
     line-height: 23px;
     font-size: 20px;
   }
+} */
+
+.bounce2 {
+  animation: bounce2 1s ease ;
+}
+@keyframes bounce2 {
+	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	40% {transform: translateY(-30px);}
+	60% {transform: translateY(-15px);}
 }
 </style>

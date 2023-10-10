@@ -3,7 +3,7 @@
     class="modal p-6 animate__animated animate__fadeIn"
     v-bind:class="{ 'is-active': this.$store.state.isFinished }"
   >
-    <div class="modal-background"></div>
+    <div class="modal-background" @click="removeStat"></div>
     <div class="">
       <div class="modal-card info pb-5">
         <section class="modal-card-body rounded-md dark:bg-[#252525] dark:border-[#3c3c3c]">
@@ -196,7 +196,6 @@ export default {
 }
 
 .modal-card-body {
-  border: 2px #b5b9bb solid;
   border-radius: 6px;
 }
 </style>
