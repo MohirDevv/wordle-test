@@ -49,10 +49,10 @@ export default {
       if (!localStorage.getItem("newUser")) {
         localStorage.setItem("newUser", false);
         this.$store.state.aboutStatus = true;
-        this.$store.state.SettingStatus = true;
+        // this.$store.state.SettingStatus = true;
       } else {
         this.$store.state.aboutStatus = false;
-        this.$store.state.SettingStatus = false;
+        // this.$store.state.SettingStatus = false;
       }
       this.isActive = false;
       this.$store.commit("checkWinner");
