@@ -7,13 +7,10 @@
     <div class="">
       <div class="modal-card info pb-5">
         <section class="modal-card-body rounded-md dark:bg-[#252525] dark:border-[#3c3c3c]">
-          <button
-            class="delete is-pulled-right"
-            @click="removeStat"
-            aria-label="close"
-          ></button>
+          <i class="fas fa-times float-right text-[16px] text-black dark:text-white" @click="removeStat()"
+      ></i>
 
-          <div class="text">
+          <div class="text pt-2">
             <p class="is-size-5 has-text-centered dark:text-white">
               Бугунги сўз:
             </p>
@@ -197,5 +194,12 @@ export default {
 
 .modal-card-body {
   border-radius: 6px;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 380px){
+  .modal-card-body {
+  margin-left: 20px;
+  margin-right: 20px;
+}
 }
 </style>

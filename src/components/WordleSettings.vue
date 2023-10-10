@@ -6,17 +6,12 @@
     <div class="modal-background" @click="removeSettings()"></div>
     <div class="modal-card game-settings">
       <section
-        class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]"
+        class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]">
         
-      >
+      <i class="fas fa-times float-right text-[16px] text-black dark:text-white" @click="removeSettings()"
+      ></i>
         <div class="sideHeader">
-          <h1 class="dark:text-white">Созламалар</h1>
-
-          <button
-            class="delete is-pulled-right"
-            @click="removeSettings()"
-            aria-label="close"
-          ></button>
+          <h1 class="text-black pt-2 dark:text-white">Созламалар</h1>
         </div>
 
         <div class="modes">
@@ -86,11 +81,6 @@ export default {
 </script>
 
 <style scoped>
-.sideHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .sideHeader h1 {
   font-weight: 700;
@@ -169,13 +159,17 @@ export default {
     max-height: 680px;
     padding: 0 15px 0 15px;
   }
+
+  .modal-card-body {
+  margin-left: 15px;
+  margin-right: 15px;
+}
 }
 .modal-background {
   opacity: 0.3 !important;
 }
 
 .modal-card-body {
-  /* border: 2px #b5b9bb solid; */
   border-radius: 6px;
 }
 

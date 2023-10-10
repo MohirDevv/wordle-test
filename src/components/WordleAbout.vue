@@ -6,13 +6,10 @@
     <div class="modal-background" @click="removeAbout"></div>
     <div class="modal-card game-help">
       <section class="modal-card-body rounded-md dark:bg-[#252525] ">
-        <button
-          class="delete is-pulled-right"
-          @click="removeAbout"
-          aria-label="close"
-        ></button>
-        <div class="instruction">
-          <p><strong class="dark:text-white">Ўйин қоидалари</strong></p>
+          <i class="fas fa-times float-right text-[16px] text-black dark:text-white" @click="removeAbout()"
+          ></i>
+          <div class="instruction pt-2">
+            <p><strong class="dark:text-white">Ўйин қоидалари</strong></p>
           <br />
           <p class="dark:text-white">
             6 та уринишда кун
@@ -169,7 +166,7 @@ export default {
     max-height: 710px;
   }
 }
-@media only screen and (min-width: 320px) and (max-width: 360px) {
+@media only screen and (min-width: 320px) and (max-width: 370px) {
   .letter {
     width: 30px;
     height: 30px;
@@ -186,6 +183,11 @@ export default {
     width: 350px;
     max-height: 680px;
   }
+
+  .modal-card-body {
+  margin-left: 20px;
+  margin-right: 20px;
+}
 }
 .modal-background {
   opacity: 0.3 !important;
