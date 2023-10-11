@@ -1,4 +1,4 @@
-  <template>
+<template>
   <div
     class="letter-border has-text-centered has-text-weight-bold dark:border-[#3a3a3c] dark:text-white"
     :class="{
@@ -7,11 +7,11 @@
       scale: pulse,
       'has-background-grey-light has-text-white animate__animated animate__flipInX':
         color == 'gray',
-        'has-background-success	has-text-white animate__animated animate__flipInX':
+      'has-background-success	has-text-white animate__animated animate__flipInX':
         color == 'green',
-        'has-background-warning has-text-white animate__animated animate__flipInX':
+      'has-background-warning has-text-white animate__animated animate__flipInX':
         color == 'yellow',
-      }"
+    }"
   >
     {{ letter }}
   </div>
@@ -106,11 +106,21 @@ export default {
 } */
 
 .bounce2 {
-  animation: bounce2 1s ease ;
+  animation: bounce2 1s ease;
 }
 @keyframes bounce2 {
-	0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-	40% {transform: translateY(-30px);}
-	60% {transform: translateY(-15px);}
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
 }
 </style>

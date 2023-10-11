@@ -3,17 +3,19 @@
     class="modal p-6 animate__animated"
     :class="{ 'is-active animate__fadeIn': this.$store.state.aboutStatus }"
   >
-    <div class="modal-background" @click="removeAbout"></div>
+    <div class="modal-background" @click="removeAbout()"></div>
     <div class="modal-card game-help">
-      <section class="modal-card-body rounded-md dark:bg-[#252525] ">
-          <i class="fas fa-times float-right text-[16px] text-black dark:text-white" @click="removeAbout()"
-          ></i>
-          <div class="instruction pt-2">
-            <p><strong class="dark:text-white">Ўйин қоидалари</strong></p>
+      <section class="modal-card-body rounded-md dark:bg-[#252525]">
+        <i
+          class="fas fa-times float-right text-[16px] cursor-pointer text-black dark:text-white"
+          @click="removeAbout()"
+        ></i>
+        <div class="instruction pt-2">
+          <p><strong class="dark:text-white">Ўйин қоидалари</strong></p>
           <br />
           <p class="dark:text-white">
             6 та уринишда кун
-            <strong class="dark:text-[#6aaa64]">СЎЗ</strong>ини топинг
+            <strong class="dark:text-white">СЎЗ</strong>ини топинг
           </p>
           <br />
           <p class="dark:text-white">
@@ -53,7 +55,7 @@
             </div>
           </div>
           <p class="dark:text-white">
-            <strong class="dark:text-[#6aaa64]">Х</strong> ҳарфи СЎЗ ичида бор
+            <strong class="dark:text-[#c9b458]">Х</strong> ҳарфи СЎЗ ичида бор
             лекин, нотўғри ўриндан жой олган.
           </p>
           <div class="example">
@@ -74,13 +76,13 @@
             </div>
           </div>
           <p class="mb-2 dark:text-white">
-            <strong class="dark:text-[#6aaa64]">Б</strong> ҳарфи СЎЗ ичида
+            <strong class="dark:text-[#787c7e]">Б</strong> ҳарфи СЎЗ ичида
             иштирок этмаган.
           </p>
         </div>
         <br />
         <p>
-          <strong class="dark:text-[#6aaa64]">Ҳар куни сўз янгиланади!</strong>
+          <strong class="dark:text-white">Ҳар куни сўз янгиланади!</strong>
         </p>
       </section>
     </div>
@@ -147,6 +149,11 @@ export default {
   padding-bottom: 20px;
   line-height: 35px;
 }
+
+.animate__animated.animate__flipInX{
+  animation-delay: .3s;
+  /* --animate-duration: 2.4s; */
+}
 @media only screen and (max-width: 500px) {
   .letter {
     width: 30px;
@@ -185,9 +192,9 @@ export default {
   }
 
   .modal-card-body {
-  margin-left: 20px;
-  margin-right: 20px;
-}
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 }
 .modal-background {
   opacity: 0.3 !important;

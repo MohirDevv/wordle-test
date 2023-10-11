@@ -205,7 +205,7 @@ export default {
 </script>
 
 <style scoped>
-.letter-border{
+.letter-border {
   display: flex;
   justify-content: center;
   align-items: center;
