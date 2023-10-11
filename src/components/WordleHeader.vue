@@ -1,7 +1,7 @@
 <template>
   <div class="header dark:bg-[#121213] dark:border-b-[#3a3a3c]">
     <div class="title is-size-6-mobile mt-5 dark:text-white">@WordleUzBot</div>
-    <div class="icon-menu gap-3">
+    <div class="icon-menu gap-1">
       <button
         type="button"
         id="help-button"

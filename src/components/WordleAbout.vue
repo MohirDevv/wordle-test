@@ -152,7 +152,7 @@ export default {
 
 .animate__animated.animate__flipInX{
   animation-delay: .3s;
-  /* --animate-duration: 2.4s; */
+  /* --animate-duration: 1.1s; */
 }
 @media only screen and (max-width: 500px) {
   .letter {

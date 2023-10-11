@@ -14,8 +14,66 @@
             @click="removeStat()"
           ></i>
 
-          <div class="text pt-2">
-            <p class="is-size-5 has-text-centered dark:text-white">
+          <div class="wrapper">
+            <div class="stats flex items-start justify-center flex-col py-4">
+
+              <h1 class="pb-3 text-black font-bold text-sm uppercase tracking-[.1em] dark:text-white">Статистика</h1>
+              <div class="info w-80 flex items-center justify-evenly">
+
+                <div class="played flex items-center justify-center flex-col"><h1 class="text-[33px] text-black dark:text-white">3</h1><p class="text-black text-[13px] dark:text-white">Played</p></div>
+
+                <div class="winrate flex items-center justify-center flex-col"><h1 class="text-[33px] text-black dark:text-white">25%</h1><p class="text-black text-[13px] dark:text-white">Win%</p></div>
+              </div>
+            </div>
+
+            <div class="guessInfo">
+              <h1 class="uppercase text-black font-bold dark:text-white">Guess Distribution</h1>
+              <div class="tables pt-2">
+
+                <div class="first pb-2 flex items-center justify-start gap-1">
+                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
+                  ">1</p>
+                   <p class="w-[290px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]
+                   ">3</p>
+                  </div>
+                <div class="secon pb-2 flex items-center justify-start gap-1">
+                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
+                  ">2</p>
+                   <p class="w-[96px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]
+                   ">1</p>
+                  </div>
+                <div class="third pb-2 flex items-center justify-start gap-1">
+                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
+                  ">3</p>
+                   <p class="w-[192px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]
+                   ">2</p>
+                  </div>
+                <div class="fourth pb-2 flex items-center justify-start gap-1">
+                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
+                  ">4</p>
+                   <p class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px]
+                   dark:bg-[#3a3a3c]">0</p>
+                  </div>
+                <div class="fifth pb-2 flex items-center justify-start gap-1">
+                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
+                  ">5</p>
+                   <p class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px]
+                   dark:bg-[#3a3a3c]">0</p>
+                  </div>
+                <div class="sixth flex items-center justify-start gap-1">
+                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
+                  ">6</p>
+                   <p class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px]
+                   dark:bg-[#3a3a3c]">0</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="trademark"></div>
+          </div>
+
+          <!-- <div class="text pt-2">
+            <p class="is-size-5 has-text-centered dark:text-white" v-if="this.$store.state.gameOver">
               Бугунги сўз:
             </p>
             <p
@@ -26,13 +84,14 @@
             </p>
             <p
               class="text-[27px] dark:text-white"
-              v-show="this.$store.state.gameOver == false"
+              v-if="this.$store.state.gameOver"
             >
               ???
             </p>
-          </div>
+          </div> -->
 
-          <br />
+          <div class="final pt-3"
+          v-if="this.$store.state.gameOver">
           <p class="has-text-centered is-size-5 dark:text-white">
             Кун сўзи янгиланишигача:
           </p>
@@ -40,6 +99,7 @@
             id="demo"
             class="has-text-bold has-text-centered is-size-2 dark:text-white"
           ></p>
+        </div>
         </section>
       </div>
     </div>
