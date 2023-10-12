@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal p-6 animate__animated"
-    :class="{ 'is-active animate__fadeIn': this.$store.state.SettingStatus }"
+    :class="{ 'is-active animate__fadeIn': store.state.SettingStatus }"
   >
     <div class="modal-background" @click="removeSettings()"></div>
     <div class="modal-card game-settings">
@@ -17,7 +17,8 @@
         </div>
 
         <div class="modes">
-          <div class="darkmode w-full flex items-center justify-between border-[#d3d6da] border-b-2 pb-3 dark:border-[#3a3a3c]"
+          <div
+            class="darkmode w-full flex items-center justify-between border-[#d3d6da] border-b-2 pb-3 dark:border-[#3a3a3c]"
           >
             <p class="dark:text-white">Тунги режим</p>
             <div class="switch__container mr-4">
@@ -31,23 +32,6 @@
               <label for="switch-shadow"></label>
             </div>
           </div>
-
-          <!-- <div class="endlessmode w-full flex justify-between items-center border-[#d3d6da] border-b-2 pb-3 dark:border-[#3a3a3c]"
-          >
-            <p class="dark:text-white">Ютказгунча</p>
-            <button class="text-[18px]">
-              <a class="px-2" href="http://localhost:8080/mode=unlim/3322444">
-                Unlim Mode
-              </a>
-            </button>
-          </div> -->
-
-          <!-- <div class="testmode w-full flex items-center justify-between">
-            <p class="dark:text-white">Report a bug</p>
-            <button class="text-white px-2 text-[18px]">
-              <a target="_blank" href="https://t.me/WordleAdminBot">Admin</a>
-            </button>
-          </div> -->
         </div>
       </section>
     </div>
@@ -57,29 +41,15 @@
 <!-- Dark mode -->
 <script setup>
 import { useDark, useToggle } from "@vueuse/core";
+import { useStore } from 'vuex'
+const store = useStore()
 const isDark = useDark();
 const toogleDark = useToggle(isDark);
-</script>
 
-<script>
-export default {
-  name: "Settings",
-  data() {
-    return {
-      theme: localStorage.getItem("vueuse-color-scheme"),
-    };
-  },
-  props: {
-    isActive: Boolean,
-  },
-  setup() {},
-  methods: {
-    removeSettings() {
-      this.$store.state.SettingStatus = false;
-    },
-  },
-  mounted() {},
-};
+const theme = localStorage.getItem("vueuse-color-scheme");
+function removeSettings() {
+  store.state.SettingStatus = false;
+}
 </script>
 
 <style scoped>

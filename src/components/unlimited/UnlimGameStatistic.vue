@@ -4,7 +4,6 @@
         <div class="">
             <div class="modal-card info pb-5">
             <section class="modal-card-body">
-            <!-- <button class="delete is-pulled-right" @click="removeStat" aria-label="close"></button> -->
             <p class="is-size-5 has-text-centered"></p>
             <p class="has-text-bold has-text-centered  is-size-4">Топилган сўзлар сони — {{this.$store.state.unlimSequenceVictory}}</p>
             <br>
