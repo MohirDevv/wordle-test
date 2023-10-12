@@ -139,7 +139,7 @@ export default {
     },
   },
   methods: {
-    async sendResult() {
+    async sendResult() {  
       // console.log(this.$store.state.victoryPercentage)
       // console.log(this.$store.state.sequenceVictory)
       // console.log(this.$store.state.sequenceVictoryRecord)
