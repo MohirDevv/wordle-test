@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <Header />
     <Ads />
     <About />
     <Settings />
@@ -32,7 +33,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"; 
+import Header from "./WordleHeader.vue";
 import WordRow from "./WordRow.vue";
 import KeyBoard from "./KeyBoard.vue";
 import About from "./WordleAbout.vue";
@@ -44,6 +46,7 @@ import { toast } from "bulma-toast";
 export default {
   name: "Game",
   components: {
+    Header,
     KeyBoard,
     WordRow,
     About,
@@ -86,95 +89,107 @@ export default {
   },
   methods: {
     async getData() {
-      let formData = {
-        today: parseInt(localStorage.getItem("today"))
-          ? parseInt(localStorage.getItem("today"))
-          : 0,
-        victory: parseInt(localStorage.getItem("victoryPercentage"))
-          ? parseInt(localStorage.getItem("victoryPercentage"))
-          : 0,
-        number_of_games: parseInt(localStorage.getItem("NumberOfGames"))
-          ? parseInt(localStorage.getItem("NumberOfGames"))
-          : 0,
-        number_of_victory: parseInt(localStorage.getItem("numberOfVictory"))
-          ? parseInt(localStorage.getItem("numberOfVictory"))
-          : 0,
-        sequance_victory: parseInt(
-          localStorage.getItem("numberOfsequenceVictory")
-        )
-          ? parseInt(localStorage.getItem("numberOfsequenceVictory"))
-          : 0,
-        sequance_victory_records: parseInt(
-          localStorage.getItem("numberOfsequenceVictoryRecord")
-        )
-          ? parseInt(localStorage.getItem("numberOfsequenceVictoryRecord"))
-          : 0,
-        current_guess_index: parseInt(localStorage.getItem("currentGuessIndex"))
-          ? parseInt(localStorage.getItem("currentGuessIndex"))
-          : 0,
-        color_list: localStorage.getItem("color")
-          ? localStorage.getItem("color")
-          : JSON.stringify([
-              ["", "", "", "", ""],
-              ["", "", "", "", ""],
-              ["", "", "", "", ""],
-              ["", "", "", "", ""],
-              ["", "", "", "", ""],
-              ["", "", "", "", ""],
-            ]),
-        guessed_letters: localStorage.getItem("guessedLetters")
-          ? localStorage.getItem("guessedLetters")
-          : JSON.stringify({
-              miss: [],
-              found: [],
-              hint: [],
-            }),
-        guesses: localStorage.getItem("guesses")
-          ? localStorage.getItem("guesses")
-          : JSON.stringify(["", "", "", "", "", ""]),
-        last_submitted: localStorage.getItem("lastSubmitted")
-          ? localStorage.getItem("lastSubmitted")
-          : "",
-        true_guess: localStorage.getItem("trueGuess")
-          ? localStorage.getItem("trueGuess")
-          : JSON.stringify(this.$store.state.trueGuess),
-        user_tries: localStorage.getItem("userTries")
-          ? localStorage.getItem("userTries")
-          : JSON.stringify(this.$store.state.userTries),
-        is_finished: this.$store.state.isFinished
-          ? this.$store.state.isFinished
-          : false,
-      };
-
+      // let formData = {
+      //   today: parseInt(localStorage.getItem("today"))
+      //     ? parseInt(localStorage.getItem("today"))
+      //     : 0,
+      //   victory: parseInt(localStorage.getItem("victoryPercentage"))
+      //     ? parseInt(localStorage.getItem("victoryPercentage"))
+      //     : 0,
+      //   number_of_games: parseInt(localStorage.getItem("NumberOfGames"))
+      //     ? parseInt(localStorage.getItem("NumberOfGames"))
+      //     : 0,
+      //   number_of_victory: parseInt(localStorage.getItem("numberOfVictory"))
+      //     ? parseInt(localStorage.getItem("numberOfVictory"))
+      //     : 0,
+      //   sequance_victory: parseInt(
+      //     localStorage.getItem("numberOfsequenceVictory")
+      //   )
+      //     ? parseInt(localStorage.getItem("numberOfsequenceVictory"))
+      //     : 0,
+      //   sequance_victory_records: parseInt(
+      //     localStorage.getItem("numberOfsequenceVictoryRecord")
+      //   )
+      //     ? parseInt(localStorage.getItem("numberOfsequenceVictoryRecord"))
+      //     : 0,
+      //   current_guess_index: parseInt(localStorage.getItem("currentGuessIndex"))
+      //     ? parseInt(localStorage.getItem("currentGuessIndex"))
+      //     : 0,
+      //   color_list: localStorage.getItem("color")
+      //     ? localStorage.getItem("color")
+      //     : JSON.stringify([
+      //         ["", "", "", "", ""],
+      //         ["", "", "", "", ""],
+      //         ["", "", "", "", ""],
+      //         ["", "", "", "", ""],
+      //         ["", "", "", "", ""],
+      //         ["", "", "", "", ""],
+      //       ]),
+      //   guessed_letters: localStorage.getItem("guessedLetters")
+      //     ? localStorage.getItem("guessedLetters")
+      //     : JSON.stringify({
+      //         miss: [],
+      //         found: [],
+      //         hint: [],
+      //       }),
+      //   guesses: localStorage.getItem("guesses")
+      //     ? localStorage.getItem("guesses")
+      //     : JSON.stringify(["", "", "", "", "", ""]),
+      //   last_submitted: localStorage.getItem("lastSubmitted")
+      //     ? localStorage.getItem("lastSubmitted")
+      //     : "",
+      //   true_guess: localStorage.getItem("trueGuess")
+      //     ? localStorage.getItem("trueGuess")
+      //     : JSON.stringify(this.$store.state.trueGuess),
+      //   user_tries: localStorage.getItem("userTries")
+      //     ? localStorage.getItem("userTries")
+      //     : JSON.stringify(this.$store.state.userTries),
+      //   is_finished: this.$store.state.isFinished
+      //     ? this.$store.state.isFinished
+      //     : false,
+      // };
+        console.log(1) 
       var telegram_id = this.$route.params.telegram_id;
 
+      const formData = {
+        telegram_id: telegram_id,
+      }
       await axios
-        .post(`api/v1/daily-statistics/${telegram_id}`, formData)
+        .post(`/auth/`, formData)
         .then((response) => {
-          console.log(response.data);
-          let state = this.$store.state;
-          let responseData = response.data;
-          state.today = responseData.today;
-
-          // getting data
-          state.guesses = JSON.parse(responseData.guesses);
-          state.colorList = JSON.parse(responseData.color_list);
-          console.log(state.colorList);
-          state.currentGuessIndex = responseData.current_guess_index;
-          state.guessedLetters = JSON.parse(responseData.guessed_letters);
-          state.isFinished = responseData.is_finished;
-          state.isWinner = responseData.is_winner;
-          state.lastSubmitted = responseData.last_submitted;
-          state.numberOfGames = responseData.number_of_games;
-          state.numberOfVictory = responseData.number_of_victory;
-          state.sequenceVictory = responseData.sequance_victory;
-          state.sequenceVictoryRecord = responseData.sequance_victory_records;
-          state.userTries = JSON.parse(responseData.user_tries);
-          state.trueGuess = JSON.parse(responseData.true_guess);
+          console.log(response)
         })
         .catch((error) => {
           console.log(error);
         });
+
+      // await axios
+      //   .post(`api/v1/daily-statistics/${telegram_id}`, formData)
+      //   .then((response) => {
+      //     console.log(response.data);
+      //     let state = this.$store.state;
+      //     let responseData = response.data;
+      //     state.today = responseData.today;
+
+      //     // getting data
+      //     state.guesses = JSON.parse(responseData.guesses);
+      //     state.colorList = JSON.parse(responseData.color_list);
+      //     console.log(state.colorList);
+      //     state.currentGuessIndex = responseData.current_guess_index;
+      //     state.guessedLetters = JSON.parse(responseData.guessed_letters);
+      //     state.isFinished = responseData.is_finished;
+      //     state.isWinner = responseData.is_winner;
+      //     state.lastSubmitted = responseData.last_submitted;
+      //     state.numberOfGames = responseData.number_of_games;
+      //     state.numberOfVictory = responseData.number_of_victory;
+      //     state.sequenceVictory = responseData.sequance_victory;
+      //     state.sequenceVictoryRecord = responseData.sequance_victory_records;
+      //     state.userTries = JSON.parse(responseData.user_tries);
+      //     state.trueGuess = JSON.parse(responseData.true_guess);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     },
     async getWords() {
       const now = new Date();

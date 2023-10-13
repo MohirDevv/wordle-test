@@ -1,18 +1,12 @@
 <template>
   <div class="wrapper min-h-[100vh] dark:bg-[#121213]">
-    <Header />
     <router-view />
   </div>
 </template>
 
 <script>
-import Header from "./components/WordleHeader.vue";
-
 export default {
   name: "App",
-  components: {
-    Header,
-  },
 };
 </script>
 
