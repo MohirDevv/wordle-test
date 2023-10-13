@@ -1,21 +1,24 @@
 <template>
   <div class="w-full h-[100vh] flex items-center justify-center">
+    <button @click="pushRoute">iuhjli</button>
     <!-- Redirect mode -->
     <telegram-login-temp
-      mode="redirect"
+      mode="callback"
       telegram-login="WordleUzBot"
-      @callback="yourCallbackFunction"
-      redirect-url="/"
+      @callback="getUser"
     />
   </div>
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import axios from "axios";
-import { useCookies } from '@vueuse/integrations/useCookies'
+import { useCookies } from "@vueuse/integrations/useCookies";
 import { telegramLoginTemp } from "vue3-telegram-login";
 
-async function yourCallbackFunction(user) {
+const router = useRouter();
+
+async function getUser(user) {
   const cookies = useCookies();
   console.log(user);
   const formData = {
@@ -25,11 +28,11 @@ async function yourCallbackFunction(user) {
     .post(`/auth/`, formData)
     .then((response) => {
       cookies.set("token", response.data.token);
-      console.log(response)
+      console.log(response);
+      router.push({ name: "Game" });
     })
     .catch((error) => {
       console.log(error);
     });
-  // user.id
 }
 </script>
