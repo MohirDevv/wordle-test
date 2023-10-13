@@ -10,7 +10,7 @@ const routes = [
     name: "Game",
     component: Game,
     meta: {
-      middleware: [auth],
+      // middleware: [auth],
     },
   },
   {
@@ -18,7 +18,7 @@ const routes = [
     name: "Unlimited",
     component: Unlimited,
     meta: {
-      middleware: [auth],
+      // middleware: [auth],
     },
   },
   {
@@ -44,9 +44,7 @@ router.beforeEach((to, from, next) => {
     next,
     store,
   };
-  return middleware[0]({
-    ...context,
-  });
+  return middleware[0]({ ...context });
 });
 
 export default router;

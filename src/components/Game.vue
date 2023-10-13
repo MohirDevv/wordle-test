@@ -64,6 +64,13 @@ export default {
         hint: [],
       },
       componentKey: 0,
+      sockets_bay_api_key: "",
+      connection_ready: false,
+      connection_error: false,
+      nickname: "",
+      websocket: null,
+      new_message: "",
+      messages: []
     };
   },
   async beforeMount() {
@@ -90,8 +97,9 @@ export default {
   },
   methods: {
     async getData() {
-      // var telegram_id = this.$store.state.telegramID;
-      // const cookies = useCookies();
+      const cookies = useCookies();
+      // this.sockets_bay_api_key = 
+      console.log(cookies.get('token'))
     },
     async getWords() {
       const now = new Date();
