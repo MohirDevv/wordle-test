@@ -1,5 +1,6 @@
 <template>
   <div class="w-full h-[100vh] flex items-center justify-center">
+    <button @click="yourCallbackFunction(3243)">312434</button>
     <!-- Callback mode -->
     <span v-if="!isLoaded">Loading...</span>
     <telegram-login-temp
@@ -20,18 +21,7 @@
 </template>
 
 <script setup>
-function onTelegramAuth(user) {
-  alert(
-    "Logged in as " +
-      user.first_name +
-      " " +
-      user.last_name +
-      " (" +
-      user.id +
-      (user.username ? ", @" + user.username : "") +
-      ")"
-  );
-}
+import axios from "axios";
 import { telegramLoginTemp } from "vue3-telegram-login";
 import { ref } from "vue";
 
@@ -42,10 +32,23 @@ function telegramLoadedCallbackFunc() {
   isLoaded.value = true;
 }
 
-function yourCallbackFunction(user) {
+async function yourCallbackFunction(user) {
   // gets user as an input
   // id, first_name, last_name, username,
   // photo_url, auth_date and hash
   console.log(user);
+  const formData = {
+    telegram_id: user,
+  };
+  await axios
+    .post(`/auth/`, formData)
+    .then((response) => {
+      cookies.set("token", response.token);
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  // user.id
 }
 </script>

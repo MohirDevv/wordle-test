@@ -2557,6 +2557,8 @@ export default createStore({
     isWinner: null,
     isFinished: null,
     SettingStatus: false,
+    telegramID: null,
+    isAuth: false,
     sequenceVictory: 0,
     sequenceVictoryRecord: 0,
     numberOfGames: 0,
