@@ -14,7 +14,8 @@
           :solution="this.$store.state.solution"
           :submitted="
             this.$store.state.submitted &&
-            i < this.$store.state.currentGuessIndex
+            i == this.$store.state.currentGuessIndex &&
+            this.$store.state.lastSubmitted != guess
           "
           :temp_colors="this.$store.state.colorList[i]"
         />
@@ -33,8 +34,8 @@
 </template>
 
 <script>
-import axios from "axios"; 
-import { useCookies } from '@vueuse/integrations/useCookies'
+import axios from "axios";
+import { useCookies } from "@vueuse/integrations/useCookies";
 import Header from "./WordleHeader.vue";
 import WordRow from "./WordRow.vue";
 import KeyBoard from "./KeyBoard.vue";
@@ -67,10 +68,7 @@ export default {
       sockets_bay_api_key: "",
       connection_ready: false,
       connection_error: false,
-      nickname: "",
       websocket: null,
-      new_message: "",
-      messages: []
     };
   },
   async beforeMount() {
@@ -94,12 +92,88 @@ export default {
       this.onKeyPress(button);
     });
     document.title = "Wordle";
+    this.$store.state.useWebsocket.onmessage = this.onSocketMessage;
   },
   methods: {
+    async onSocketMessage(evt) {
+      this.$store.state.submitted = false;
+      const state = this.$store.state;
+      const index = state.currentGuessIndex;
+      var value = state.guesses[index];
+      console.log(index);
+      console.log(value);
+      var res = JSON.parse(evt.data);
+      console.log(res)
+      console.log(res.message);
+      if (!value) {
+        var word;
+        for (const key in res.message) {
+          if (res.message.hasOwnProperty(key)) {
+            word = key;
+          }
+        }
+        state.guesses[index] = word;
+        value = word
+      }
+      const checked = res.message[value];
+      console.log(checked)
+      console.log(state.guesses[index])
+      if (checked) {
+        state.currentGuessIndex++;
+        for (let i = 0; i < 5; i++) {
+          state.colorList[index][i] = res.message[value][i];
+
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+        for (let i = 0; i < res.message[value].length; i++) {
+          // miss
+          if (
+            res.message[value][i] == -1 &&
+            !state.guessedLetters.miss.includes(value[i])
+          ) {
+            state.guessedLetters.miss.push(value[i]);
+          }
+          // success
+          if (
+            res.message[value][i] == 1 &&
+            !state.guessedLetters.found.includes(value[i])
+          ) {
+            state.guessedLetters.found.push(value[i]);
+          }
+          // hint
+          if (
+            res.message[value][i] == 0 &&
+            !state.guessedLetters.hint.includes(value[i])
+          ) {
+            state.guessedLetters.hint.push(value[i]);
+          }
+        }
+      } else if (res.type == "error") {
+        this.$store.state.lastSubmitted = "";
+        toast({
+          message: "Бундай сўзни ишлатиб бўлгансиз",
+          type: "is-warning",
+          dismissible: false,
+          animate: { in: "shakeX" },
+          pauseOnHover: false,
+          duration: 2000,
+          position: "top-center",
+        });
+      } else {
+        this.$store.state.lastSubmitted = "";
+        toast({
+          message: "Бундай сўз рўйхатда мавжуд эмас",
+          type: "is-warning",
+          dismissible: false,
+          animate: { in: "shakeX" },
+          pauseOnHover: false,
+          duration: 2000,
+          position: "top-center",
+        });
+      }
+    },
     async getData() {
       const cookies = useCookies();
-      // this.sockets_bay_api_key = 
-      console.log(cookies.get('token'))
     },
     async getWords() {
       const now = new Date();
@@ -183,44 +257,44 @@ export default {
         return;
       }
       if (button == "{enter}") {
-        this.$store.state.submitted = true;
         if (currentGuess.length == 5) {
-          if (
-            this.$store.state.words_list.includes(
-              this.$store.state.guesses[currentGuessIndex]
-            )
-          ) {
-            this.$store.state.currentGuessIndex++;
-            localStorage.setItem(
-              "currentGuessIndex",
-              parseInt(this.$store.state.currentGuessIndex)
-            );
-            for (var i = 0; i < currentGuess.length; i++) {
-              let c = currentGuess.charAt(i);
-              if (c == this.$store.state.solution.charAt(i)) {
-                this.$store.state.guessedLetters.found.push(c);
-              } else if (this.$store.state.solution.indexOf(c) != -1) {
-                this.$store.state.guessedLetters.hint.push(c);
-              } else {
-                this.$store.state.guessedLetters.miss.push(c);
-              }
-            }
-            localStorage.setItem(
-              "guessedLetters",
-              JSON.stringify(this.$store.state.guessedLetters)
-            );
-          } else {
-            toast({
-              message: "Бундай сўз рўйхатда мавжуд эмас",
-              type: "is-warning",
-              dismissible: false,
-              animate: { in: "shakeX" },
-              pauseOnHover: false,
-              duration: 2000,
-              position: "top-center",
-            });
-          }
+          this.$store.state.submitted = true;
         }
+        // if (
+        //   this.$store.state.words_list.includes(
+        //     this.$store.state.guesses[currentGuessIndex]
+        //   )
+        // ) {
+        //   this.$store.state.currentGuessIndex++;
+        //   localStorage.setItem(
+        //     "currentGuessIndex",
+        //     parseInt(this.$store.state.currentGuessIndex)
+        //   );
+        //   for (var i = 0; i < currentGuess.length; i++) {
+        //     let c = currentGuess.charAt(i);
+        //     if (c == this.$store.state.solution.charAt(i)) {
+        //       this.$store.state.guessedLetters.found.push(c);
+        //     } else if (this.$store.state.solution.indexOf(c) != -1) {
+        //       this.$store.state.guessedLetters.hint.push(c);
+        //     } else {
+        //       this.$store.state.guessedLetters.miss.push(c);
+        //     }
+        //   }
+        //   localStorage.setItem(
+        //     "guessedLetters",
+        //     JSON.stringify(this.$store.state.guessedLetters)
+        //   );
+        // } else {
+        //   toast({
+        //     message: "Бундай сўз рўйхатда мавжуд эмас",
+        //     type: "is-warning",
+        //     dismissible: false,
+        //     animate: { in: "shakeX" },
+        //     pauseOnHover: false,
+        //     duration: 2000,
+        //     position: "top-center",
+        //   });
+        // }
       } else if (button == "{bksp}") {
         guesses[currentGuessIndex] = currentGuess.slice(0, -1);
       } else if (currentGuess.length < 5) {

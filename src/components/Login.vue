@@ -1,6 +1,5 @@
 <template>
   <div class="w-full h-[100vh] flex items-center justify-center">
-    <button @click="pushRoute">iuhjli</button>
     <!-- Redirect mode -->
     <telegram-login-temp
       mode="callback"

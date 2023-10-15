@@ -2557,8 +2557,8 @@ export default createStore({
     isWinner: null,
     isFinished: null,
     SettingStatus: false,
-    telegramID: null,
     isAuth: false,
+    useWebsocket: null,
     sequenceVictory: 0,
     sequenceVictoryRecord: 0,
     numberOfGames: 0,
@@ -2594,79 +2594,107 @@ export default createStore({
     unlimFinished: null,
   },
   mutations: {
-    initializeValue(state) {
-      if (localStorage.getItem("userTries")) {
-        state.userTries = JSON.parse(localStorage.getItem("userTries"));
-      } else {
-        localStorage.setItem("userTries", JSON.stringify(state.userTries));
+    initializeValue(state, payload) {
+      state.guesses[payload.i] = payload.word;
+      state.colorList[payload.i] = payload.colors;
+      state.currentGuessIndex = payload.i + 1;
+
+      for (let i = 0; i < payload.colors.length; i++) {
+        // miss
+        if (
+          payload.colors[i] == -1 &&
+          !state.guessedLetters.miss.includes(payload.word[i])
+        ) {
+          state.guessedLetters.miss.push(payload.word[i]);
+        } 
+        // success
+        if (
+          payload.colors[i] == 1 &&
+          !state.guessedLetters.found.includes(payload.word[i])
+        ) {
+          state.guessedLetters.found.push(payload.word[i]);
+        } 
+        // hint
+        if (
+          payload.colors[i] == 0 &&
+          !state.guessedLetters.hint.includes(payload.word[i])
+        ) {
+          state.guessedLetters.hint.push(payload.word[i]);
+        } 
       }
 
-      if (localStorage.getItem("trueGuess")) {
-        state.trueGuess = JSON.parse(localStorage.getItem("trueGuess"));
-      } else {
-        localStorage.setItem("trueGuess", JSON.stringify(state.trueGuess));
-      }
+      // if (localStorage.getItem("userTries")) {
+      //   state.userTries = JSON.parse(localStorage.getItem("userTries"));
+      // } else {
+      //   localStorage.setItem("userTries", JSON.stringify(state.userTries));
+      // }
 
-      if (localStorage.getItem("guessedLetters")) {
-        state.guessedLetters = JSON.parse(
-          localStorage.getItem("guessedLetters")
-        );
-      } else {
-        localStorage.setItem(
-          "guessedLetters",
-          JSON.stringify(state.guessedLetters)
-        );
-      }
+      // if (localStorage.getItem("trueGuess")) {
+      //   state.trueGuess = JSON.parse(localStorage.getItem("trueGuess"));
+      // } else {
+      //   localStorage.setItem("trueGuess", JSON.stringify(state.trueGuess));
+      // }
 
-      if (localStorage.getItem("color")) {
-        state.colorList = JSON.parse(localStorage.getItem("color"));
-      } else {
-        localStorage.setItem("color", JSON.stringify(state.colorList));
-      }
+      // if (localStorage.getItem("guessedLetters")) {
+      //   state.guessedLetters = JSON.parse(
+      //     localStorage.getItem("guessedLetters")
+      //   );
+      // } else {
+      //   localStorage.setItem(
+      //     "guessedLetters",
+      //     JSON.stringify(state.guessedLetters)
+      //   );
+      // }
 
-      if (localStorage.getItem("currentGuessIndex")) {
-        state.currentGuessIndex = parseInt(
-          localStorage.getItem("currentGuessIndex")
-        );
-      } else {
-        localStorage.setItem(
-          "currentGuessIndex",
-          parseInt(state.currentGuessIndex)
-        );
-      }
+      // if (localStorage.getItem("color")) {
+      //   state.colorList = JSON.parse(localStorage.getItem("color"));
+      // } else {
+      //   localStorage.setItem("color", JSON.stringify(state.colorList));
+      // }
 
-      if (localStorage.getItem("guesses")) {
-        state.guesses = JSON.parse(localStorage.getItem("guesses"));
-      } else {
-        localStorage.setItem("guesses", JSON.stringify(state.guesses));
-      }
-      if (localStorage.getItem("NumberOfGames")) {
-        state.numberOfGames = parseInt(localStorage.getItem("NumberOfGames"));
-      }
+      // if (localStorage.getItem("currentGuessIndex")) {
+      //   state.currentGuessIndex = parseInt(
+      //     localStorage.getItem("currentGuessIndex")
+      //   );
+      // } else {
+      //   localStorage.setItem(
+      //     "currentGuessIndex",
+      //     parseInt(state.currentGuessIndex)
+      //   );
+      // }
 
-      if (localStorage.getItem("numberOfsequenceVictory")) {
-        state.sequenceVictory = parseInt(
-          localStorage.getItem("numberOfsequenceVictory")
-        );
-      }
+      // if (localStorage.getItem("guesses")) {
+      //   state.guesses = JSON.parse(localStorage.getItem("guesses"));
+      // } else {
+      //   localStorage.setItem("guesses", JSON.stringify(state.guesses));
+      // }
+      // if (localStorage.getItem("NumberOfGames")) {
+      //   state.numberOfGames = parseInt(localStorage.getItem("NumberOfGames"));
+      // }
 
-      if (localStorage.getItem("numberOfsequenceVictoryRecord")) {
-        state.sequenceVictoryRecord = parseInt(
-          localStorage.getItem("numberOfsequenceVictoryRecord")
-        );
-      }
+      // if (localStorage.getItem("numberOfsequenceVictory")) {
+      //   state.sequenceVictory = parseInt(
+      //     localStorage.getItem("numberOfsequenceVictory")
+      //   );
+      // }
 
-      if (localStorage.getItem("numberOfVictory")) {
-        state.numberOfVictory = parseInt(
-          localStorage.getItem("numberOfVictory")
-        );
-      }
+      // if (localStorage.getItem("numberOfsequenceVictoryRecord")) {
+      //   state.sequenceVictoryRecord = parseInt(
+      //     localStorage.getItem("numberOfsequenceVictoryRecord")
+      //   );
+      // }
 
-      if (localStorage.getItem("victoryPercentage")) {
-        state.victoryPercentage = parseInt(
-          localStorage.getItem("victoryPercentage")
-        );
-      }
+      // if (localStorage.getItem("numberOfVictory")) {
+      //   state.numberOfVictory = parseInt(
+      //     localStorage.getItem("numberOfVictory")
+      //   );
+      // }
+
+      // if (localStorage.getItem("victoryPercentage")) {
+      //   state.victoryPercentage = parseInt(
+      //     localStorage.getItem("victoryPercentage")
+      //   );
+      // }
     },
 
     unlimInitializeValue(state) {

@@ -6,11 +6,11 @@
       '': !pulse,
       scale: pulse,
       'has-background-grey-light has-text-white animate__animated animate__flipInX':
-        color == 'gray',
+        color == '-1',
       'has-background-success	has-text-white animate__animated animate__flipInX':
-        color == 'green',
+        color == '1',
       'has-background-warning has-text-white animate__animated animate__flipInX':
-        color == 'yellow',
+        color == '0',
     }"
   >
     {{ letter }}

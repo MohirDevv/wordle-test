@@ -179,9 +179,9 @@ export default {
       statText += `5 👍 × <b>${this.$store.state.trueGuess[4]}</b>\n`;
       statText += `6 👏 × <b>${this.$store.state.trueGuess[5]}</b>\n`;
 
-      let userTry = `${
-        this.$store.state.words_list.indexOf(this.$store.state.solution) + 1
-      } `;
+      // let userTry = `${
+      //   this.$store.state.words_list.indexOf(this.$store.state.solution) + 1
+      // } `;
       userTry += this.$store.state.isWinner
         ? `${localStorage.getItem("currentGuessIndex")}/6 \n`
         : "x/6 \n";
