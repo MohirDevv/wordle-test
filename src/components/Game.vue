@@ -151,18 +151,7 @@ export default {
       } else if (res.type == "error") {
         this.$store.state.lastSubmitted = "";
         toast({
-          message: "Бундай сўзни ишлатиб бўлгансиз",
-          type: "is-warning",
-          dismissible: false,
-          animate: { in: "shakeX" },
-          pauseOnHover: false,
-          duration: 2000,
-          position: "top-center",
-        });
-      } else {
-        this.$store.state.lastSubmitted = "";
-        toast({
-          message: "Бундай сўз рўйхатда мавжуд эмас",
+          message: res.message,
           type: "is-warning",
           dismissible: false,
           animate: { in: "shakeX" },

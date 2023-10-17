@@ -78,6 +78,9 @@ export default {
   border-color: #538d4e !important;
 }
 .letter-border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 60px;
   height: 60px;
   font-size: 2rem;

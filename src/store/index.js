@@ -2556,6 +2556,7 @@ export default createStore({
     lastSubmitted: "",
     isWinner: null,
     isFinished: null,
+    unlimStats: null,
     SettingStatus: false,
     isAuth: false,
     useWebsocket: null,
@@ -2606,21 +2607,21 @@ export default createStore({
           !state.guessedLetters.miss.includes(payload.word[i])
         ) {
           state.guessedLetters.miss.push(payload.word[i]);
-        } 
+        }
         // success
         if (
           payload.colors[i] == 1 &&
           !state.guessedLetters.found.includes(payload.word[i])
         ) {
           state.guessedLetters.found.push(payload.word[i]);
-        } 
+        }
         // hint
         if (
           payload.colors[i] == 0 &&
           !state.guessedLetters.hint.includes(payload.word[i])
         ) {
           state.guessedLetters.hint.push(payload.word[i]);
-        } 
+        }
       }
 
       // if (localStorage.getItem("userTries")) {
@@ -2697,73 +2698,102 @@ export default createStore({
       // }
     },
 
-    unlimInitializeValue(state) {
-      if (localStorage.getItem("unlimIsNewUser")) {
-        console.log(localStorage.getItem("unlimIsNewUser"));
-        localStorage.setItem("unlimIsNewUser", false);
-      } else {
-        localStorage.setItem("unlimIsNewUser", true);
+    unlimInitializeValue(state, payload) {
+      console.log(payload);
+      state.unlimGuesses[payload.i] = payload.word;
+      state.unlimColorList[payload.i] = payload.colors;
+      state.unlimCurrentGuessIndex = payload.i + 1;
+
+      for (let i = 0; i < payload.colors.length; i++) {
+        // miss
+        if (
+          payload.colors[i] == -1 &&
+          !state.unlimGuessedLetters.miss.includes(payload.word[i])
+        ) {
+          state.unlimGuessedLetters.miss.push(payload.word[i]);
+        }
+        // success
+        if (
+          payload.colors[i] == 1 &&
+          !state.unlimGuessedLetters.found.includes(payload.word[i])
+        ) {
+          state.unlimGuessedLetters.found.push(payload.word[i]);
+        }
+        // hint
+        if (
+          payload.colors[i] == 0 &&
+          !state.unlimGuessedLetters.hint.includes(payload.word[i])
+        ) {
+          state.unlimGuessedLetters.hint.push(payload.word[i]);
+        }
       }
 
-      if (localStorage.getItem("unlimSolution")) {
-        state.unlimSolution = localStorage.getItem("unlimSolution");
-        console.log(state.unlimSolution);
-      }
+      // if (localStorage.getItem("unlimIsNewUser")) {
+      //   console.log(localStorage.getItem("unlimIsNewUser"));
+      //   localStorage.setItem("unlimIsNewUser", false);
+      // } else {
+      //   localStorage.setItem("unlimIsNewUser", true);
+      // }
 
-      if (localStorage.getItem("unlimColor")) {
-        state.unlimColorList = JSON.parse(localStorage.getItem("unlimColor"));
-      } else {
-        localStorage.setItem(
-          "unlimColor",
-          JSON.stringify(state.unlimColorList)
-        );
-      }
+      // if (localStorage.getItem("unlimSolution")) {
+      //   state.unlimSolution = localStorage.getItem("unlimSolution");
+      //   console.log(state.unlimSolution);
+      // }
 
-      if (localStorage.getItem("unlimGuesses")) {
-        state.unlimGuesses = JSON.parse(localStorage.getItem("unlimGuesses"));
-      } else {
-        localStorage.setItem(
-          "unlimGuesses",
-          JSON.stringify(state.unlimGuesses)
-        );
-      }
+      // if (localStorage.getItem("unlimColor")) {
+      //   state.unlimColorList = JSON.parse(localStorage.getItem("unlimColor"));
+      // } else {
+      //   localStorage.setItem(
+      //     "unlimColor",
+      //     JSON.stringify(state.unlimColorList)
+      //   );
+      // }
 
-      if (localStorage.getItem("unlimGuessedLetters")) {
-        state.unlimGuessedLetters = JSON.parse(
-          localStorage.getItem("unlimGuessedLetters")
-        );
-      } else {
-        localStorage.setItem(
-          "unlimGuessedLetters",
-          JSON.stringify(state.unlimGuessedLetters)
-        );
-      }
+      // if (localStorage.getItem("unlimGuesses")) {
+      //   state.unlimGuesses = JSON.parse(localStorage.getItem("unlimGuesses"));
+      // } else {
+      //   localStorage.setItem(
+      //     "unlimGuesses",
+      //     JSON.stringify(state.unlimGuesses)
+      //   );
+      // }
 
-      if (localStorage.getItem("unlimCurrentGuessIndex")) {
-        state.unlimCurrentGuessIndex = parseInt(
-          localStorage.getItem("unlimCurrentGuessIndex")
-        );
-        // if (localStorage.getItem("unlimFinished")=='true'){
-        //   localStorage.setItem("unlimCurrentGuessIndex", 0)
-        //   state.unlimCurrentGuessIndex = parseInt(localStorage.getItem("unlimCurrentGuessIndex"));
-        // }
-      } else {
-        localStorage.setItem(
-          "unlimCurrentGuessIndex",
-          parseInt(state.unlimCurrentGuessIndex)
-        );
-      }
+      // if (localStorage.getItem("unlimGuessedLetters")) {
+      //   state.unlimGuessedLetters = JSON.parse(
+      //     localStorage.getItem("unlimGuessedLetters")
+      //   );
+      // } else {
+      //   localStorage.setItem(
+      //     "unlimGuessedLetters",
+      //     JSON.stringify(state.unlimGuessedLetters)
+      //   );
+      // }
 
-      if (localStorage.getItem("unlimSequenceVictory")) {
-        state.unlimSequenceVictory = parseInt(
-          localStorage.getItem("unlimSequenceVictory")
-        );
-      } else {
-        localStorage.setItem(
-          "unlimSequenceVictory",
-          parseInt(state.unlimSequenceVictory)
-        );
-      }
+      // if (localStorage.getItem("unlimCurrentGuessIndex")) {
+      //   state.unlimCurrentGuessIndex = parseInt(
+      //     localStorage.getItem("unlimCurrentGuessIndex")
+      //   );
+      //   // if (localStorage.getItem("unlimFinished")=='true'){
+      //   //   localStorage.setItem("unlimCurrentGuessIndex", 0)
+      //   //   state.unlimCurrentGuessIndex = parseInt(localStorage.getItem("unlimCurrentGuessIndex"));
+      //   // }
+      // } else {
+      //   localStorage.setItem(
+      //     "unlimCurrentGuessIndex",
+      //     parseInt(state.unlimCurrentGuessIndex)
+      //   );
+      // }
+
+      // if (localStorage.getItem("unlimSequenceVictory")) {
+      //   state.unlimSequenceVictory = parseInt(
+      //     localStorage.getItem("unlimSequenceVictory")
+      //   );
+      // } else {
+      //   localStorage.setItem(
+      //     "unlimSequenceVictory",
+      //     parseInt(state.unlimSequenceVictory)
+      //   );
+      // }
     },
 
     checkWinner(state) {

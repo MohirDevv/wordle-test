@@ -11,6 +11,9 @@ export default function auth({ to, next, store }) {
   function onSocketOpen(evt) {
     console.log("Valid token");
   }
+  function onSocketClose(evt) {
+    console.log("Closed");
+  }
   function onSocketMessage(evt) {
     var res = JSON.parse(evt.data);
     console.log(res);
@@ -25,7 +28,11 @@ export default function auth({ to, next, store }) {
             colors: color,
             i: index,
           };
-          store.commit("initializeValue", payload);
+          if (mode == "daily") {
+            store.commit("initializeValue", payload);
+          } else if (mode == "unlimited") {
+            store.commit("unlimInitializeValue", payload);
+          }
         }
       });
     }
@@ -54,7 +61,7 @@ export default function auth({ to, next, store }) {
     if (to.name == "Game") {
       mode = "daily";
     } else if (to.name == "Unlimited") {
-      mode = "unlim";
+      mode = "unlimited";
     }
 
     var sockets_bay_url = `ws://cp.wordle.uz:8000/ws/game/${mode}?token=${token}`;
@@ -64,6 +71,7 @@ export default function auth({ to, next, store }) {
     websocket.onopen = onSocketOpen;
     websocket.onmessage = onSocketMessage;
     websocket.onerror = onSocketError;
+    websocket.onclose = onSocketClose;
   } else {
     return next({ name: "Login" });
   }

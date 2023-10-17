@@ -9,7 +9,6 @@ import "simple-keyboard/build/css/index.css";
 export default {
   data: () => ({
     keyboard: null,
-    componentKey: 0,
     
   }),
   name: "KeyBoard",
@@ -33,11 +32,13 @@ export default {
         default: [
           "Ё Й Ц У К Е Н Г Ш Ў З Х Ъ",
           "Ф Қ В А П Р О Л Д Ж Э",
-          "{enter} Я Ч С М И Т Ь Б Ю Ғ Ҳ {bksp}",
+          "Я Ч С М И Т Ь Б Ю Ғ Ҳ {bksp}",
+          "{enter}",
         ],
       },
       display: {
-        "{bksp}": "⌫",
+        // "{bksp}": "⌫",
+        "{bksp}": " ",
         "{enter}": "Текшириш",
       },
       buttonTheme: [
@@ -47,36 +48,37 @@ export default {
             "Ё Й Ц У К Е Н Г Ш Ў З Х Ъ Ф Қ В А П Р О Л Д Ж Э Я Ч С М И Т Ь Б Ю Ғ Ҳ {bksp} {enter}",
         },
         {
+          class: "bksp",
+          buttons: "{bksp}",
+        },
+        {
           class: "is-success",
           buttons: "{enter}",
         },
         {
           class: "df-dark",
           buttons:
-            JSON.parse(localStorage.getItem("unlimGuessedLetters")).miss
-              .length > 0
-              ? JSON.parse(localStorage.getItem("unlimGuessedLetters"))
-                  .miss.map((name) => name.toUpperCase())
+            this.$store.state.guessedLetters.miss.length > 0
+              ? this.$store.state.guessedLetters.miss
+                  .map((name) => name.toUpperCase())
                   .join(" ")
               : "q",
         },
         {
           class: "df-success",
           buttons:
-            JSON.parse(localStorage.getItem("unlimGuessedLetters")).miss
-              .length > 0
-              ? JSON.parse(localStorage.getItem("unlimGuessedLetters"))
-                  .found.map((name) => name.toUpperCase())
+            this.$store.state.guessedLetters.miss.length > 0
+              ? this.$store.state.guessedLetters.found
+                  .map((name) => name.toUpperCase())
                   .join(" ")
               : "q",
         },
         {
           class: "df-warning",
           buttons:
-            JSON.parse(localStorage.getItem("unlimGuessedLetters")).miss
-              .length > 0
-              ? JSON.parse(localStorage.getItem("unlimGuessedLetters"))
-                  .hint.map((name) => name.toUpperCase())
+            this.$store.state.guessedLetters.miss.length > 0
+              ? this.$store.state.guessedLetters.hint
+                  .map((name) => name.toUpperCase())
                   .join(" ")
               : "q",
         },
