@@ -143,7 +143,8 @@ export default {
           // hint
           if (
             res.message[value][i] == 0 &&
-            !state.guessedLetters.hint.includes(value[i])
+            !state.guessedLetters.hint.includes(value[i]) &&
+            !state.guessedLetters.found.includes(value[i])
           ) {
             state.guessedLetters.hint.push(value[i]);
           }
@@ -230,7 +231,7 @@ export default {
       while (day > this.$store.state.words_list.length) {
         day -= this.$store.state.words_list.length;
       }
-      console.log(this.$store.state.words_list[day]);
+      // console.log(this.$store.state.words_list[day]);
       // console.log(state.currentGuessIndex);
       this.$store.state.solution = this.$store.state.words_list[day];
       return this.$store.state.words_list[day];

@@ -35,6 +35,21 @@ export default function auth({ to, next, store }) {
           }
         }
       });
+    } else if (res.last_game) {
+      store.state.gameOver = true;
+      store.state.isFinished = true;
+      res.last_game.map((el, index) => {
+        for (var key in el) {
+          const word = key;
+          const color = el[key];
+          const payload = {
+            word: word,
+            colors: color,
+            i: index,
+          };
+          store.commit("initializeValue", payload);
+        }
+      });
     }
     if (res.error) {
       isValid = false;

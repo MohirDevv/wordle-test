@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <Header />
-    <Settings />
+    <UnlimSettings />
     <UnlimGameStatistic
       :gameOver="this.$store.state.gameOver"
       @get-words="getWords"
@@ -15,7 +15,11 @@
           :key="i"
           :value="guess"
           :solution="this.$store.state.unlimSolution"
-          :submitted="i < this.$store.state.unlimCurrentGuessIndex"
+          :submitted="
+            this.$store.state.submitted &&
+            i == this.$store.state.unlimCurrentGuessIndex &&
+            this.$store.state.unlimLastSubmitted != guess
+          "
           :temp_colors="this.$store.state.unlimColorList[i]"
         />
       </div>
@@ -35,7 +39,7 @@
 import Header from "../WordleHeader.vue";
 import UnlimWordRow from "./UnlimWordRow.vue";
 import KeyBoard from "./UnlimKeyBoard.vue";
-import Settings from "../WordleSettings.vue";
+import UnlimSettings from "./UnlimitedSettings.vue";
 import About from "../WordleAbout.vue";
 import UnlimGameStatistic from "./UnlimGameStatistic.vue";
 import { toast } from "bulma-toast";
@@ -48,7 +52,7 @@ export default {
     UnlimWordRow,
     About,
     UnlimGameStatistic,
-    Settings,
+    UnlimSettings,
   },
   data() {
     return {
@@ -80,8 +84,76 @@ export default {
       this.onKeyPress(button);
     });
     document.title = "Wordle";
+    this.$store.state.useWebsocket.onmessage = this.onSocketMessage;
   },
   methods: {
+    async onSocketMessage(evt) {
+      this.$store.state.submitted = false;
+      const state = this.$store.state;
+      const index = state.unlimCurrentGuessIndex;
+      var value = state.unlimGuesses[index];
+      console.log(index);
+      console.log(value);
+      var res = JSON.parse(evt.data);
+      console.log(res);
+      console.log(res.message);
+      if (!value) {
+        var word;
+        for (const key in res.message) {
+          if (res.message.hasOwnProperty(key)) {
+            word = key;
+          }
+        }
+        state.unlimGuesses[index] = word;
+        value = word;
+      }
+      const checked = res.message[value];
+      console.log(checked);
+      console.log(state.unlimGuesses[index]);
+      if (checked) {
+        this.$store.state.unlimCurrentGuessIndex++;
+        for (let i = 0; i < 5; i++) {
+          state.unlimColorList[index][i] = res.message[value][i];
+
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+        for (let i = 0; i < res.message[value].length; i++) {
+          // miss
+          if (
+            res.message[value][i] == -1 &&
+            !state.unlimGuessedLetters.miss.includes(value[i])
+          ) {
+            state.unlimGuessedLetters.miss.push(value[i]);
+          }
+          // success
+          if (
+            res.message[value][i] == 1 &&
+            !state.unlimGuessedLetters.found.includes(value[i])
+          ) {
+            state.unlimGuessedLetters.found.push(value[i]);
+          }
+          // hint
+          if (
+            res.message[value][i] == 0 &&
+            !state.unlimGuessedLetters.hint.includes(value[i]) &&
+            !state.unlimGuessedLetters.found.includes(value[i])
+          ) {
+            state.unlimGuessedLetters.hint.push(value[i]);
+          }
+        }
+      } else if (res.type == "error") {
+        this.$store.state.unlimLastSubmitted = "";
+        toast({
+          message: res.message,
+          type: "is-warning",
+          dismissible: false,
+          animate: { in: "shakeX" },
+          pauseOnHover: false,
+          duration: 2000,
+          position: "top-center",
+        });
+      }
+    },
     getWords() {
       if (
         localStorage.getItem("unlimIsNewUser") == "true" ||
@@ -147,41 +219,42 @@ export default {
       }
       if (button == "{enter}") {
         if (currentGuess.length == 5) {
-          if (
-            this.$store.state.words_list.includes(
-              this.$store.state.unlimGuesses[currentGuessIndex]
-            )
-          ) {
-            this.$store.state.unlimCurrentGuessIndex++;
-            localStorage.setItem(
-              "unlimCurrentGuessIndex",
-              parseInt(this.$store.state.unlimCurrentGuessIndex)
-            );
-            for (var i = 0; i < currentGuess.length; i++) {
-              let c = currentGuess.charAt(i);
-              if (c == this.$store.state.unlimSolution.charAt(i)) {
-                this.$store.state.unlimGuessedLetters.found.push(c);
-              } else if (this.$store.state.unlimSolution.indexOf(c) != -1) {
-                this.$store.state.unlimGuessedLetters.hint.push(c);
-              } else {
-                this.$store.state.unlimGuessedLetters.miss.push(c);
-              }
-            }
-            localStorage.setItem(
-              "unlimGuessedLetters",
-              JSON.stringify(this.$store.state.unlimGuessedLetters)
-            );
-          } else {
-            toast({
-              message: "Бундай сўз рўйхатда мавжуд эмас",
-              type: "is-warning",
-              dismissible: false,
-              animate: { in: "shakeX" },
-              pauseOnHover: false,
-              duration: 2000,
-              position: "top-center",
-            });
-          }
+          this.$store.state.submitted = true;
+          // if (
+          //   this.$store.state.words_list.includes(
+          //     this.$store.state.unlimGuesses[currentGuessIndex]
+          //   )
+          // ) {
+          //   this.$store.state.unlimCurrentGuessIndex++;
+          //   localStorage.setItem(
+          //     "unlimCurrentGuessIndex",
+          //     parseInt(this.$store.state.unlimCurrentGuessIndex)
+          //   );
+          //   for (var i = 0; i < currentGuess.length; i++) {
+          //     let c = currentGuess.charAt(i);
+          //     if (c == this.$store.state.unlimSolution.charAt(i)) {
+          //       this.$store.state.unlimGuessedLetters.found.push(c);
+          //     } else if (this.$store.state.unlimSolution.indexOf(c) != -1) {
+          //       this.$store.state.unlimGuessedLetters.hint.push(c);
+          //     } else {
+          //       this.$store.state.unlimGuessedLetters.miss.push(c);
+          //     }
+          //   }
+          //   localStorage.setItem(
+          //     "unlimGuessedLetters",
+          //     JSON.stringify(this.$store.state.unlimGuessedLetters)
+          //   );
+          // } else {
+          //   toast({
+          //     message: "Бундай сўз рўйхатда мавжуд эмас",
+          //     type: "is-warning",
+          //     dismissible: false,
+          //     animate: { in: "shakeX" },
+          //     pauseOnHover: false,
+          //     duration: 2000,
+          //     position: "top-center",
+          //   });
+          // }
         }
       } else if (button == "{bksp}") {
         guesses[currentGuessIndex] = currentGuess.slice(0, -1);

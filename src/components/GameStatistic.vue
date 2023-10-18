@@ -14,92 +14,134 @@
             @click="removeStat()"
           ></i>
 
-          <div class="wrapper">
+          <div class="wrapper" v-if="userStats">
             <div class="stats flex items-start justify-center flex-col py-4">
+              <h1
+                class="pb-3 text-black font-bold text-sm uppercase tracking-[.1em] dark:text-white"
+              >
+                Статистика
+              </h1>
+              <div class="info sm:w-[20rem] w-[17rem]  flex items-center justify-evenly">
+                <div class="played flex items-center justify-center flex-col">
+                  <h1 class="text-[25px] text-black dark:text-white">
+                    {{ userStats.games_count }}
+                  </h1>
+                  <p class="text-black text-[13px] dark:text-white">Played</p>
+                </div>
 
-              <h1 class="pb-3 text-black font-bold text-sm uppercase tracking-[.1em] dark:text-white">Статистика</h1>
-              <div class="info w-80 flex items-center justify-evenly">
-
-                <div class="played flex items-center justify-center flex-col"><h1 class="text-[33px] text-black dark:text-white">3</h1><p class="text-black text-[13px] dark:text-white">Played</p></div>
-
-                <div class="winrate flex items-center justify-center flex-col"><h1 class="text-[33px] text-black dark:text-white">25%</h1><p class="text-black text-[13px] dark:text-white">Win%</p></div>
+                <div class="winrate flex items-center justify-center flex-col">
+                  <h1 class="text-[25px] text-black dark:text-white">
+                    {{ userStats.wins_percent }}%
+                  </h1>
+                  <p class="text-black text-[13px] dark:text-white">Win%</p>
+                </div>
+                <div class="winrate flex items-center justify-center flex-col">
+                  <h1 class="text-[25px] text-black dark:text-white">
+                    {{ userStats.consecutive_wins_count }}
+                  </h1>
+                  <p class="text-black text-[13px] dark:text-white">Streak </p>
+                </div>
+                <div class="winrate flex items-center justify-center flex-col">
+                  <h1 class="text-[25px] text-black dark:text-white">
+                    {{ userStats.consecutive_wins_record_count }}
+                  </h1>
+                  <p class="text-black text-[13px] dark:text-white">Max Streak</p>
+                </div>
               </div>
             </div>
 
             <div class="guessInfo">
-              <h1 class="uppercase text-black font-bold dark:text-white">Guess Distribution</h1>
+              <h1 class="uppercase text-black font-bold dark:text-white">
+                Guess Distribution
+              </h1>
               <div class="tables pt-2">
-
                 <div class="first pb-2 flex items-center justify-start gap-1">
-                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
-                  ">1</p>
-                   <p class="w-[290px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]
-                   ">3</p>
-                  </div>
+                  <p
+                    class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
+                  >
+                    1
+                  </p>
+                  <p
+                    class="w-[290px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                  >
+                    3
+                  </p>
+                </div>
                 <div class="secon pb-2 flex items-center justify-start gap-1">
-                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
-                  ">2</p>
-                   <p class="w-[96px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]
-                   ">1</p>
-                  </div>
+                  <p
+                    class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
+                  >
+                    2
+                  </p>
+                  <p
+                    class="w-[96px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                  >
+                    1
+                  </p>
+                </div>
                 <div class="third pb-2 flex items-center justify-start gap-1">
-                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
-                  ">3</p>
-                   <p class="w-[192px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]
-                   ">2</p>
-                  </div>
+                  <p
+                    class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
+                  >
+                    3
+                  </p>
+                  <p
+                    class="w-[192px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                  >
+                    2
+                  </p>
+                </div>
                 <div class="fourth pb-2 flex items-center justify-start gap-1">
-                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
-                  ">4</p>
-                   <p class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px]
-                   dark:bg-[#3a3a3c]">0</p>
-                  </div>
+                  <p
+                    class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
+                  >
+                    4
+                  </p>
+                  <p
+                    class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                  >
+                    0
+                  </p>
+                </div>
                 <div class="fifth pb-2 flex items-center justify-start gap-1">
-                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
-                  ">5</p>
-                   <p class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px]
-                   dark:bg-[#3a3a3c]">0</p>
-                  </div>
+                  <p
+                    class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
+                  >
+                    5
+                  </p>
+                  <p
+                    class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                  >
+                    0
+                  </p>
+                </div>
                 <div class="sixth flex items-center justify-start gap-1">
-                  <p class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white
-                  ">6</p>
-                   <p class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px]
-                   dark:bg-[#3a3a3c]">0</p>
-                  </div>
+                  <p
+                    class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
+                  >
+                    6
+                  </p>
+                  <p
+                    class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                  >
+                    0
+                  </p>
+                </div>
               </div>
             </div>
 
             <div class="trademark"></div>
           </div>
 
-          <!-- <div class="text pt-2">
-            <p class="is-size-5 has-text-centered dark:text-white" v-if="this.$store.state.gameOver">
-              Бугунги сўз:
+          <div class="final pt-3" v-if="this.$store.state.gameOver">
+            <p class="has-text-centered is-size-5 dark:text-white">
+              Кун сўзи янгиланишигача:
             </p>
             <p
-              class="has-text-bold has-text-centered is-uppercase is-size-4 px-2 rounded-md mt-2 bg-[#6aaa64] text-white dark:bg-[#538d4e]"
-              v-if="this.$store.state.gameOver"
-            >
-              {{ this.$store.state.solution }}
-            </p>
-            <p
-              class="text-[27px] dark:text-white"
-              v-if="this.$store.state.gameOver"
-            >
-              ???
-            </p>
-          </div> -->
-
-          <div class="final pt-3"
-          v-if="this.$store.state.gameOver">
-          <p class="has-text-centered is-size-5 dark:text-white">
-            Кун сўзи янгиланишигача:
-          </p>
-          <p
-            id="demo"
-            class="has-text-bold has-text-centered is-size-2 dark:text-white"
-          ></p>
-        </div>
+              id="demo"
+              class="has-text-bold has-text-centered is-size-2 dark:text-white"
+            ></p>
+          </div>
         </section>
       </div>
     </div>
@@ -107,7 +149,8 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import { useCookies } from "@vueuse/integrations/useCookies";
+import axios from "axios";
 
 export default {
   name: "GameStatistic",
@@ -119,27 +162,44 @@ export default {
         setEmoji: "",
       },
       userData: "",
+      userStats: null,
     };
   },
   props: {
     gameOver: Boolean,
   },
+  async beforeMount() {
+    const token = useCookies().get("token");
+    await axios
+      .get("/statistics/statistics/daily-game/", {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.userStats = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   mounted() {
-    // this.timer()
+    this.timer();
   },
   watch: {
     gameOver: {
       handler(gameOver) {
         if (gameOver) {
           setTimeout(() => {
-            this.sendResult();
+            console.log("timer");
           }, 1000);
         }
       },
     },
   },
   methods: {
-    async sendResult() {  
+    async sendResult() {
       // console.log(this.$store.state.victoryPercentage)
       // console.log(this.$store.state.sequenceVictory)
       // console.log(this.$store.state.sequenceVictoryRecord)
@@ -203,43 +263,47 @@ export default {
     removeStat() {
       this.$store.state.isFinished = false;
     },
+    calcTimer(countDownDate) {
+      // Get today's date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate.getTime() - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // If the count down is over, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        return "Янги сўз киритилишини кутинг";
+      }
+
+      // Output the result in an element with id="demo"
+      return (
+        (hours < 10 ? "0" + hours : hours) +
+        ":" +
+        (minutes < 10 ? "0" + minutes : minutes) +
+        ":" +
+        (seconds < 10 ? "0" + seconds : seconds)
+      );
+    },
     timer() {
       var tomorrow = new Date().getDate() + 1;
       var month = new Date().getMonth() + 1;
       var year = new Date().getFullYear();
       var countDownDate = new Date(year, month, tomorrow, 0, 0, 0);
-
+      const calcCountDown = this.calcTimer;
+      document.getElementById("demo").innerHTML = calcCountDown(countDownDate);
       // Update the count down every 1 second
-      var x = setInterval(function () {
-        // Get today's date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distance = countDownDate.getTime() - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        // var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        // Output the result in an element with id="demo"
-        // this.timerP = hours + ":"
-        // + minutes + ":" + seconds;
+      setInterval(function () {
         document.getElementById("demo").innerHTML =
-          (hours < 10 ? "0" + hours : hours) +
-          ":" +
-          (minutes < 10 ? "0" + minutes : minutes) +
-          ":" +
-          (seconds < 10 ? "0" + seconds : seconds);
-
-        // If the count down is over, write some text
-        if (distance < 0) {
-          clearInterval(x);
-          document.getElementById("demo").innerHTML =
-            "Янги сўз киритилишини кутинг";
-        }
+          calcCountDown(countDownDate);
       }, 1000);
     },
   },

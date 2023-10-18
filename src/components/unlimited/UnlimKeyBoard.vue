@@ -9,7 +9,6 @@ import "simple-keyboard/build/css/index.css";
 export default {
   data: () => ({
     keyboard: null,
-    
   }),
   name: "KeyBoard",
   props: {
@@ -58,8 +57,8 @@ export default {
         {
           class: "df-dark",
           buttons:
-            this.$store.state.guessedLetters.miss.length > 0
-              ? this.$store.state.guessedLetters.miss
+            this.$store.state.unlimGuessedLetters.miss.length > 0
+              ? this.$store.state.unlimGuessedLetters.miss
                   .map((name) => name.toUpperCase())
                   .join(" ")
               : "q",
@@ -67,8 +66,8 @@ export default {
         {
           class: "df-success",
           buttons:
-            this.$store.state.guessedLetters.miss.length > 0
-              ? this.$store.state.guessedLetters.found
+            this.$store.state.unlimGuessedLetters.miss.length > 0
+              ? this.$store.state.unlimGuessedLetters.found
                   .map((name) => name.toUpperCase())
                   .join(" ")
               : "q",
@@ -76,8 +75,8 @@ export default {
         {
           class: "df-warning",
           buttons:
-            this.$store.state.guessedLetters.miss.length > 0
-              ? this.$store.state.guessedLetters.hint
+            this.$store.state.unlimGuessedLetters.miss.length > 0
+              ? this.$store.state.unlimGuessedLetters.hint
                   .map((name) => name.toUpperCase())
                   .join(" ")
               : "q",
@@ -90,6 +89,7 @@ export default {
   watch: {
     guessedLetters: {
       handler(guessedLetters) {
+        console.log(guessedLetters)
         this.keyboard.addButtonTheme(
           guessedLetters.miss.map((name) => name.toUpperCase()).join(" "),
           "is-dark animate__animated animate__fadeIn"
@@ -125,7 +125,7 @@ export default {
   max-width: 550px;
 }
 
-.hg-theme-default .hg-button{
+.hg-theme-default .hg-button {
   border-bottom: none;
 }
 .simple-keyboard.hg-layout-default .hg-button.key-bg {
@@ -144,20 +144,20 @@ export default {
   color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.is-dark {
-  background: #787c7e ;
+  background: #787c7e;
   color: white;
 }
 .dark .simple-keyboard.hg-layout-default .hg-button.is-dark {
-  background: #3a3a3c ;
+  background: #3a3a3c;
   color: white;
 }
 .simple-keyboard.hg-layout-default .hg-button.is-success {
-  background: #6aaa64 ;
-  color: white ;
+  background: #6aaa64;
+  color: white;
 }
 .dark .simple-keyboard.hg-layout-default .hg-button.is-success {
-  background: #6aaa64 ;
-  color: white ;
+  background: #6aaa64;
+  color: white;
 }
 
 .simple-keyboard.hg-layout-default .hg-button.reset-color {

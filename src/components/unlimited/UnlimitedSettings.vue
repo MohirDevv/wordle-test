@@ -33,11 +33,12 @@
             </div>
           </div>
         </div> -->
-
+        <details>
+          <summary class="font-bold">Тунги режим</summary>
           <div
             class="darkmode w-full flex items-center justify-between border-[#d3d6da] pb-3 dark:border-[#3a3a3c] pt-[10px] px-[10px]"
           >
-            <p class="text-black font-semibold dark:text-white">Тунги режим</p>
+            <p class="dark:text-white">Тунги режим</p>
             <div class="switch__container mr-4">
               <input
                 :checked="theme === 'auto' ? true : false"
@@ -80,11 +81,28 @@
             </div>
           </div> -->
 
+          <!-- <div class="chechboxes">
+            <div class="first flex items-center justify-between px-[20px]">
+              <p>Light  mode</p>
+            <input type="checkbox" id="first" value="auto" :checked="theme === 'light' ? true : false" @click="toogleDark()">
+          </div>
+            <div class="first flex items-center justify-between px-[20px]" :checked="theme === 'dark' ? true : false" @click="toogleDark()" >
+              <p>Dark  mode</p>
+            <input type="checkbox" id="second" value="auto">
+          </div>
+            <div class="first flex items-center justify-between px-[20px]" :checked="theme === 'auto' ? true : false" @click="toogleDark()">
+              <p>Auto  mode</p>
+            <input type="checkbox" id="third" value="auto">
+          </div>
+          </div>  -->
+        </details>
+        <details>
+          <summary>Ойин режимлари</summary>
           <div class="endlessmode px-[10px] flex items-center justify-between">
-            <p class="text-black dark:text-white">Чексиз режим</p>
+            <p class="text-black dark:text-white">Кунлик режим</p>
             <button>
-              <a href="/unlim" class="px-[3px]"
-                >Endless Mode 🔄</a
+              <a href="/" class="px-[3px]"
+                >Daily mode</a
               >
             </button>
           </div>
@@ -93,6 +111,7 @@
             <p class=" text-black dark:text-white">Blitz</p>
             <button  class="px-[6px]">Blitz</button>
           </div>
+        </details>
       </section>
     </div>
   </div>
@@ -195,6 +214,10 @@ details summary {
   gap: 10px;
   padding-top: 20px;
 } */
+
+.darkmode p {
+  font-weight: 600;
+}
 
 .endlessmode button {
   background: #538d4e;
