@@ -15,84 +15,44 @@
         <div class="sideHeader">
           <h1 class="text-black pt-2 dark:text-white">Созламалар</h1>
         </div>
-
-        <!-- <div class="modes">
-          <div
-            class="darkmode w-full flex items-center justify-between border-[#d3d6da] border-b-2 pb-3 dark:border-[#3a3a3c]"
-          >
-            <p class="dark:text-white">Тунги режим</p>
-            <div class="switch__container mr-4">
-              <input
-                :checked="theme === 'auto' ? true : false"
-                id="switch-shadow"
-                class="switch switch--shadow darktoggle"
-                type="checkbox"
-                @click="toogleDark()"
-              />
-              <label for="switch-shadow"></label>
-            </div>
-          </div>
-        </div> -->
-
-          <div
-            class="darkmode w-full flex items-center justify-between border-[#d3d6da] pb-3 dark:border-[#3a3a3c] pt-[10px] px-[10px]"
-          >
-            <p class="text-black font-semibold dark:text-white">Тунги режим</p>
-            <div class="switch__container mr-4">
-              <input
-                :checked="theme === 'auto' ? true : false"
-                id="switch-shadow"
-                class="switch switch--shadow darktoggle"
-                type="checkbox"
-                @click="toogleDark()"
-              />
-              <label for="switch-shadow"></label>
-            </div>
-          </div>
-          <!-- <div
-            class="darkmode w-full flex items-center justify-between border-[#d3d6da] pb-3 dark:border-[#3a3a3c] pt-[10px] px-[10px]"
-          >
-            <p class="dark:text-white">Тунги режим</p>
-            <div class="switch__container mr-4">
-              <input
-                :checked="theme === 'auto' ? true : false"
-                id="switch-shadow1"
-                class="switch1 switch--shadow1"
-                type="checkbox"
-                @click="toogleDark()"
-              />
-              <label for="switch-shadow1"></label>
-            </div>
-          </div>
-          <div
-            class="darkmode w-full flex items-center justify-between border-[#d3d6da] pb-3 dark:border-[#3a3a3c] pt-[10px] px-[10px]"
-          >
-            <p class="dark:text-white">Auto режим</p>
-            <div class="switch__container mr-4">
-              <input
-                :checked="theme === 'auto' ? true : false"
-                id="switch-shadow2"
-                class="switch2 switch--shadow2 darktoggle"
-                type="checkbox"
-                @click="toogleDark()"
-              />
-              <label for="switch-shadow2"></label>
-            </div>
-          </div> -->
-
-          <div class="endlessmode px-[10px] flex items-center justify-between">
-            <p class="text-black dark:text-white">Чексиз режим</p>
-            <button>
-              <a href="/unlim" class="px-[3px]"
-                >Endless Mode 🔄</a
-              >
-            </button>
-          </div>
-
-          <div class="testmode px-[10px] pt-[20px] flex items-center justify-between">
-            <p class=" text-black dark:text-white">Blitz</p>
-            <button  class="px-[6px]">Blitz</button>
-          </div>
+        <h1 class="text-black pt-2 dark:text-white">Тун режими</h1>
+        <form class="pl-[10px] pt-2 gap-5">
+          <!-- <label for="01">Авто</label>
+          <input id="01" type="radio" name="r" @change="toogleDark()" checked /> -->
+          <label for="02" class="text-black dark:text-white">Тун режими</label>
+          <input
+            id="02"
+            type="radio"
+            name="r"
+            @change="toogleDark()"
+            :checked="theme === 'auto' ? true : false"
+          />
+          <label for="03" class="text-black dark:text-white">Кун режими</label>
+          <input
+            id="03"
+            type="radio"
+            name="r"
+            @change="toogleDark()"
+            :checked="theme === 'light' ? true : false"
+          />
+        </form>
+        <h1 class="text-black pt-2 dark:text-white">Ўйин режими</h1>
+        <form class="pl-[10px] pt-2 gap-5">
+          <label for="04" class="text-black dark:text-white">Ҳар кунлик</label>
+          <input
+            id="04"
+            type="radio"
+            name="r"
+            v-model="selectedPage"
+            value="game"
+            @change="redirectToPage"
+            checked
+          />
+          <label for="05" class="text-black dark:text-white">Ютқазгунча</label>
+          <input id="05" type="radio" name="r"  v-model="selectedPage" value="unlim" @change="redirectToPage"/>
+          <!-- <label for="06" class="text-black dark:text-white">Блиц</label>
+          <input id="06" type="radio" name="r" /> -->
+        </form>
       </section>
     </div>
   </div>
@@ -102,131 +62,98 @@
 <script setup>
 import { useDark, useToggle } from "@vueuse/core";
 import { useStore } from "vuex";
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 const store = useStore();
 const isDark = useDark();
 const toogleDark = useToggle(isDark);
+const selectedPage = ref(null);
+const route = useRoute();
+const router = useRouter();
 
 const theme = localStorage.getItem("vueuse-color-scheme");
+const redirectToPage = () => {
+  if (selectedPage.value) {
+    console.log(selectedPage.value);
+    router.push({ path: `/unlim` });
+  }
+};
 function removeSettings() {
   store.state.SettingStatus = false;
 }
 </script>
 
 <style scoped>
-details[open] summary ~ * {
-  animation: open 0.3s ease-in-out;
-}
-
-@keyframes open {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-details summary::-webkit-details-marker {
-  display: none;
-}
-
-details summary {
-  width: 100%;
-  padding: 0.5rem 0;
-  position: relative;
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: 400;
-  list-style: none;
-  padding-top: 20px;
-}
-.dark details summary {
-  width: 100%;
-  padding: 0.5rem 0;
-  position: relative;
-  cursor: pointer;
-  font-size: 1.25rem;
-  font-weight: 400;
-  list-style: none;
-  padding-top: 20px;
-  color: #fff;
-}
-
-details summary:after {
-  content: "+";
+form {
   color: black;
-  position: absolute;
-  font-size: 1.75rem;
-  line-height: 0;
-  margin-top: 0.75rem;
-  right: 0;
-  font-weight: 500;
-  transform-origin: center;
-  transition: 200ms linear;
-}
-.dark details summary:after {
-  content: "+";
-  color: #fff;
-  position: absolute;
-  font-size: 1.75rem;
-  line-height: 0;
-  margin-top: 0.75rem;
-  right: 0;
-  font-weight: 500;
-  transform-origin: center;
-  transition: 200ms linear;
-}
-details[open] summary:after {
-  transform: rotate(45deg);
-  font-size: 2rem;
-}
-details summary {
-  outline: 0;
+  font-size: 18px;
+  font-weight: 600;
+  --radio-size: 30px;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto var(--radio-size);
+  align-items: center;
+  label {
+    cursor: pointer;
+  }
+  input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    outline: none;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 300px;
+    display: grid;
+    justify-self: end;
+    justify-items: center;
+    align-items: center;
+    overflow: hidden;
+    transition: border 0.5s ease;
+    &::before,
+    &::after {
+      content: "";
+      display: flex;
+      justify-self: center;
+      border-radius: 50%;
+    }
+    &::before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    &::after {
+      position: relative;
+      width: calc(100% / 2);
+      height: calc(100% / 2);
+      top: var(--y, 100%);
+      transition: top 0.5s cubic-bezier(0.48, 1.97, 0.5, 0.63);
+    }
+    &:checked {
+      &::before {
+        --opacity: 0;
+      }
+      ~ input[type="radio"] {
+        &::after {
+          --y: -100%;
+        }
+      }
+    }
+    &:not(:checked) {
+      &::before {
+        --opacity: 1;
+        transition: opacity 0s linear 0.5s;
+      }
+    }
+  }
 }
 .sideHeader h1 {
   font-weight: 700;
   font-size: 18px;
 }
-
-/* .modes {
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 20px;
-} */
-
-.endlessmode button {
-  background: #538d4e;
-  border-radius: 6px;
-  border: 2px #538d4e solid;
-  color: white;
-  cursor: pointer;
-}
-
-.endlessmode button a {
-  color: white;
-}
-
-.endlessmode p {
-  font-weight: 600;
-}
-
-.testmode p {
-  font-weight: 600;
-}
-
-.testmode button {
-  background: #538d4e;
-  border-radius: 6px;
-  border: 2px #538d4e solid;
-  color: white;
-  cursor: pointer;
-}
-.testmode button a:hover {
-  color: white;
-}
-
 .modal-card {
   max-width: 500px !important;
 }
@@ -266,180 +193,5 @@ details summary {
 .modal-card-body {
   border-radius: 6px;
 }
-
-.switch__container {
-  width: 30px;
-}
-
-.switch {
-  visibility: hidden;
-  position: absolute;
-  margin-left: -9999px;
-}
-
-.switch + label {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-}
-
-.switch--shadow + label {
-  padding: 2px;
-  width: 40px;
-  height: 22px;
-  border-radius: 10px;
-  border: none;
-}
-
-.switch--shadow + label:before,
-.switch--shadow + label:after {
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: 2px;
-  bottom: 1px;
-  content: "";
-  transition: 0.4s;
-}
-
-.switch--shadow + label:before {
-  right: 1px;
-  background-color: #878a8c;
-  border-radius: 10px;
-  border: none;
-  transition: 0.4s;
-}
-
-.switch--shadow + label:after {
-  width: 18px;
-  height: 18px;
-  background-color: #fff;
-  border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: 0.8s;
-}
-
-.switch--shadow:checked + label:before {
-  background-color: #538d4e;
-}
-
-.switch--shadow:checked + label:after {
-  transform: translateX(18px);
-}
-.switch1 {
-  visibility: hidden;
-  position: absolute;
-  margin-left: -9999px;
-}
-
-.switch1 + label {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-}
-
-.switch--shadow1 + label {
-  padding: 2px;
-  width: 40px;
-  height: 22px;
-  border-radius: 10px;
-  border: none;
-}
-
-.switch--shadow1 + label:before,
-.switch--shadow1 + label:after {
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: 2px;
-  bottom: 1px;
-  content: "";
-  transition: 0.4s;
-}
-
-.switch--shadow1 + label:before {
-  right: 1px;
-  background-color: #878a8c;
-  border-radius: 10px;
-  border: none;
-  transition: 0.4s;
-}
-
-.switch--shadow1 + label:after {
-  width: 18px;
-  height: 18px;
-  background-color: #fff;
-  border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: 0.8s;
-}
-
-.switch--shadow1:checked + label:before {
-  background-color: #538d4e;
-}
-
-.switch--shadow1:checked + label:after {
-  transform: translateX(18px);
-}
-.switch2 {
-  visibility: hidden;
-  position: absolute;
-  margin-left: -9999px;
-}
-
-.switch2 + label {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-}
-
-.switch--shadow2 + label {
-  padding: 2px;
-  width: 40px;
-  height: 22px;
-  border-radius: 10px;
-  border: none;
-}
-
-.switch--shadow2 + label:before,
-.switch--shadow2 + label:after {
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: 2px;
-  bottom: 1px;
-  content: "";
-  transition: 0.4s;
-}
-
-.switch--shadow2 + label:before {
-  right: 1px;
-  background-color: #878a8c;
-  border-radius: 10px;
-  border: none;
-  transition: 0.4s;
-}
-
-.switch--shadow2 + label:after {
-  width: 18px;
-  height: 18px;
-  background-color: #fff;
-  border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: 0.8s;
-}
-
-.switch--shadow2:checked + label:before {
-  background-color: #538d4e;
-}
-
-.switch--shadow2:checked + label:after {
-  transform: translateX(18px);
-}
 </style>
+

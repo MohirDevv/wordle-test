@@ -299,12 +299,12 @@ export default {
       var year = new Date().getFullYear();
       var countDownDate = new Date(year, month, tomorrow, 0, 0, 0);
       const calcCountDown = this.calcTimer;
-      document.getElementById("demo").innerHTML = calcCountDown(countDownDate);
-      // Update the count down every 1 second
-      setInterval(function () {
-        document.getElementById("demo").innerHTML =
-          calcCountDown(countDownDate);
-      }, 1000);
+      // document.getElementById("demo").innerHTML = calcCountDown(countDownDate);
+      // // Update the count down every 1 second
+      // setInterval(function () {
+      //   document.getElementById("demo").innerHTML =
+      //     calcCountDown(countDownDate);
+      // }, 1000);
     },
   },
 };
@@ -313,13 +313,6 @@ export default {
 <style scoped>
 .modal-background {
   opacity: 0.3 !important;
-}
-
-.text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 .modal-card-body {
