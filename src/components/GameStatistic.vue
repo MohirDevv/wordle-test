@@ -14,14 +14,16 @@
             @click="removeStat()"
           ></i>
 
+          <h1
+            class="pb-3 text-black font-bold text-sm uppercase tracking-[.1em] dark:text-white"
+          >
+            Статистика
+          </h1>
           <div class="wrapper" v-if="userStats">
             <div class="stats flex items-start justify-center flex-col py-4">
-              <h1
-                class="pb-3 text-black font-bold text-sm uppercase tracking-[.1em] dark:text-white"
+              <div
+                class="info sm:w-[20rem] w-[17rem] flex items-center justify-evenly"
               >
-                Статистика
-              </h1>
-              <div class="info sm:w-[20rem] w-[17rem]  flex items-center justify-evenly">
                 <div class="played flex items-center justify-center flex-col">
                   <h1 class="text-[25px] text-black dark:text-white">
                     {{ userStats.games_count }}
@@ -39,13 +41,15 @@
                   <h1 class="text-[25px] text-black dark:text-white">
                     {{ userStats.consecutive_wins_count }}
                   </h1>
-                  <p class="text-black text-[13px] dark:text-white">Streak </p>
+                  <p class="text-black text-[13px] dark:text-white">Streak</p>
                 </div>
                 <div class="winrate flex items-center justify-center flex-col">
                   <h1 class="text-[25px] text-black dark:text-white">
                     {{ userStats.consecutive_wins_record_count }}
                   </h1>
-                  <p class="text-black text-[13px] dark:text-white">Max Streak</p>
+                  <p class="text-black text-[13px] dark:text-white">
+                    Max Streak
+                  </p>
                 </div>
               </div>
             </div>
@@ -169,36 +173,40 @@ export default {
     gameOver: Boolean,
   },
   async beforeMount() {
-    const token = useCookies().get("token");
-    await axios
-      .get("/statistics/statistics/daily-game/", {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        this.userStats = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await this.getStats();
   },
   mounted() {
     this.timer();
   },
   watch: {
     gameOver: {
-      handler(gameOver) {
+      async handler(gameOver) {
         if (gameOver) {
+          await this.getStats();
           setTimeout(() => {
-            console.log("timer");
+            this.timer();
           }, 1000);
         }
       },
     },
   },
   methods: {
+    async getStats() {
+      const token = useCookies().get("token");
+      await axios
+        .get("/statistics/daily-game/", {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.userStats = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     async sendResult() {
       // console.log(this.$store.state.victoryPercentage)
       // console.log(this.$store.state.sequenceVictory)
@@ -299,12 +307,14 @@ export default {
       var year = new Date().getFullYear();
       var countDownDate = new Date(year, month, tomorrow, 0, 0, 0);
       const calcCountDown = this.calcTimer;
-      // document.getElementById("demo").innerHTML = calcCountDown(countDownDate);
-      // // Update the count down every 1 second
-      // setInterval(function () {
-      //   document.getElementById("demo").innerHTML =
-      //     calcCountDown(countDownDate);
-      // }, 1000);
+      const timerEl = document.getElementById("demo");
+      if (timerEl) {
+        timerEl.innerHTML = calcCountDown(countDownDate);
+        // Update the count down every 1 second
+        setInterval(function () {
+          timerEl.innerHTML = calcCountDown(countDownDate);
+        }, 1000);
+      }
     },
   },
 };

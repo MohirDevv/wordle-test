@@ -9,57 +9,62 @@
         class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]"
       >
         <i
-          class="fas fa-times float-right text-[16px] text-black cursor-pointer dark:text-white"
+          class="fas fa-times float-right text-black cursor-pointer dark:text-white"
           @click="removeSettings()"
         ></i>
-        <div class="sideHeader">
-          <h1 class="text-black pt-2 dark:text-white">Созламалар</h1>
+        <div class="sideHeader flex items-center justify-center">
+          <h1
+            class="text-black text-[19px] font-medium flex items-center justify-center dark:text-white"
+          >
+            Созламалар
+          </h1>
         </div>
-        <h1 class="text-black pt-2 dark:text-white">Тун режими</h1>
-        <form class="pl-[10px] pt-2 gap-5">
-          <!-- <label for="01">Авто</label>
-          <input id="01" type="radio" name="r" @change="toogleDark()" checked /> -->
-          <label for="02" class="text-black dark:text-white">Тун режими</label>
-          <input
-            id="02"
-            type="radio"
-            name="r"
-            @change="toogleDark()"
-            :checked="theme === 'auto' ? true : false"
-          />
-          <label for="03" class="text-black dark:text-white">Кун режими</label>
-          <input
-            id="03"
-            type="radio"
-            name="r"
-            @change="toogleDark()"
-            :checked="theme === 'light' ? true : false"
-          />
-        </form>
+        <h1 class="text-black pt-2 dark:text-white">Тунги режими</h1>
+        <div class="darkmodes pl-[10px] pt-2">
+          <label class="label flex items-center justify-between">
+            <span
+              class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white"
+              >Тун режими</span
+            >
+            <input
+              type="radio"
+              name="name1"
+              class="checkbox"
+              :checked="theme === 'auto' || 'dark' ? true : false"
+              @click="toogleDark()"
+            />
+            <span class="fake"></span>
+          </label>
+          <label class="label flex items-center justify-between">
+            <span
+              class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white"
+              >Кун режими</span
+            >
+            <input
+              type="radio"
+              name="name1"
+              class="checkbox"
+              :checked="theme === 'light' ? true : false"
+              @click="toogleDark()"
+            />
+            <span class="fake"></span>
+          </label>
+        </div>
         <h1 class="text-black pt-2 dark:text-white">Ўйин режими</h1>
-        <form class="pl-[10px] pt-2 gap-5">
-          <label for="04" class="text-black dark:text-white">Ҳар кунлик</label>
-          <input
-            id="04"
-            type="radio"
-            name="r"
-            v-model="selectedPage"
-            value="game"
-            @change="redirectToPage"
-          />
-          <label for="05" class="text-black dark:text-white">Ютқазгунча</label>
-          <input
-            id="05"
-            type="radio"
-            name="r"
-            v-model="selectedPage"
-            value="unlim"
-            @change="redirectToPage"
-            checked
-          />
-          <!-- <label for="06" class="text-black dark:text-white">Блиц</label>
-          <input id="06" type="radio" name="r" /> -->
-        </form>
+        <div class="routePart pl-[10px] pt-2">
+          <router-link to="/" class="flex justify-between items-center pb-3">
+            <span class="text-[18px] font-semibold text-black dark:text-white"
+              >Ҳар кунлик</span
+            >
+            <div v-if="route.name == 'Game'" class="">✔️</div>
+          </router-link>
+          <router-link to="/unlim" class="flex justify-between items-center">
+            <span class="text-[18px] font-semibold text-black dark:text-white"
+              >Ютқазгунча</span
+            >
+            <div v-if="route.name == 'Unlimited'" class="">✔️</div>
+          </router-link>
+        </div>
       </section>
     </div>
   </div>
@@ -82,8 +87,11 @@ const router = useRouter();
 const theme = localStorage.getItem("vueuse-color-scheme");
 const redirectToPage = () => {
   if (selectedPage.value) {
+    if (store.state.isFinished == true) {
+      store.state.SettingStatus = false;
+    }
     console.log(selectedPage.value);
-    router.push({ path: `/game` });
+    router.push({ path: `/` });
   }
 };
 function removeSettings() {
@@ -92,70 +100,30 @@ function removeSettings() {
 </script>
 
 <style scoped>
-form {
-  color: black;
-  font-size: 18px;
-  font-weight: 600;
-  --radio-size: 30px;
+.checkbox {
+  display: none;
+}
+
+.fake {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
   position: relative;
-  display: grid;
-  grid-template-columns: auto var(--radio-size);
-  align-items: center;
-  label {
-    cursor: pointer;
-  }
-  input[type="radio"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    position: relative;
-    outline: none;
-    margin: 0;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 300px;
-    display: grid;
-    justify-self: end;
-    justify-items: center;
-    align-items: center;
-    overflow: hidden;
-    transition: border 0.5s ease;
-    &::before,
-    &::after {
-      content: "";
-      display: flex;
-      justify-self: center;
-      border-radius: 50%;
-    }
-    &::before {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-    &::after {
-      position: relative;
-      width: calc(100% / 2);
-      height: calc(100% / 2);
-      top: var(--y, 100%);
-      transition: top 0.5s cubic-bezier(0.48, 1.97, 0.5, 0.63);
-    }
-    &:checked {
-      &::before {
-        --opacity: 0;
-      }
-      ~ input[type="radio"] {
-        &::after {
-          --y: -100%;
-        }
-      }
-    }
-    &:not(:checked) {
-      &::before {
-        --opacity: 1;
-        transition: opacity 0s linear 0.5s;
-      }
-    }
-  }
+}
+
+.fake::before {
+  content: "✔️";
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.checkbox:checked + .fake::before {
+  opacity: 1;
 }
 .sideHeader h1 {
   font-weight: 700;

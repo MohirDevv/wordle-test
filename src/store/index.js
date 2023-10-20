@@ -2700,32 +2700,53 @@ export default createStore({
 
     unlimInitializeValue(state, payload) {
       console.log(payload);
-      state.unlimGuesses[payload.i] = payload.word;
-      state.unlimColorList[payload.i] = payload.colors;
-      state.unlimCurrentGuessIndex = payload.i + 1;
+      if (payload) {
+        state.unlimGuesses[payload.i] = payload.word;
+        state.unlimColorList[payload.i] = payload.colors;
+        state.unlimCurrentGuessIndex = payload.i + 1;
 
-      for (let i = 0; i < payload.colors.length; i++) {
-        // miss
-        if (
-          payload.colors[i] == -1 &&
-          !state.unlimGuessedLetters.miss.includes(payload.word[i])
-        ) {
-          state.unlimGuessedLetters.miss.push(payload.word[i]);
+        for (let i = 0; i < payload.colors.length; i++) {
+          // miss
+          if (
+            payload.colors[i] == -1 &&
+            !state.unlimGuessedLetters.miss.includes(payload.word[i])
+          ) {
+            state.unlimGuessedLetters.miss.push(payload.word[i]);
+          }
+          // success
+          if (
+            payload.colors[i] == 1 &&
+            !state.unlimGuessedLetters.found.includes(payload.word[i])
+          ) {
+            state.unlimGuessedLetters.found.push(payload.word[i]);
+          }
+          // hint
+          if (
+            payload.colors[i] == 0 &&
+            !state.unlimGuessedLetters.hint.includes(payload.word[i])
+          ) {
+            state.unlimGuessedLetters.hint.push(payload.word[i]);
+          }
         }
-        // success
-        if (
-          payload.colors[i] == 1 &&
-          !state.unlimGuessedLetters.found.includes(payload.word[i])
-        ) {
-          state.unlimGuessedLetters.found.push(payload.word[i]);
-        }
-        // hint
-        if (
-          payload.colors[i] == 0 &&
-          !state.unlimGuessedLetters.hint.includes(payload.word[i])
-        ) {
-          state.unlimGuessedLetters.hint.push(payload.word[i]);
-        }
+      } else {
+        state.unlimGuessedLetters = {
+          miss: [],
+          found: [],
+          hint: [],
+        };
+        state.unlimCurrentGuessIndex = 0;
+        state.unlimGuessedLetters.miss = [];
+        state.unlimGuessedLetters.found = [];
+        state.unlimGuessedLetters.hint = [];
+        state.unlimGuesses = ["", "", "", "", "", ""];
+        state.unlimColorList = [
+          ["", "", "", "", ""],
+          ["", "", "", "", ""],
+          ["", "", "", "", ""],
+          ["", "", "", "", ""],
+          ["", "", "", "", ""],
+          ["", "", "", "", ""],
+        ];
       }
 
       // if (localStorage.getItem("unlimIsNewUser")) {

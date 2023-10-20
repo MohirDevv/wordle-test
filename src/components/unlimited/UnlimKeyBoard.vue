@@ -56,12 +56,7 @@ export default {
         },
         {
           class: "df-dark",
-          buttons:
-            this.$store.state.unlimGuessedLetters.miss.length > 0
-              ? this.$store.state.unlimGuessedLetters.miss
-                  .map((name) => name.toUpperCase())
-                  .join(" ")
-              : "q",
+          buttons: this.guessedLetters.miss.join(" ").toUpperCase(),
         },
         {
           class: "df-success",
@@ -89,19 +84,23 @@ export default {
   watch: {
     guessedLetters: {
       handler(guessedLetters) {
-        console.log(guessedLetters)
-        this.keyboard.addButtonTheme(
-          guessedLetters.miss.map((name) => name.toUpperCase()).join(" "),
-          "is-dark animate__animated animate__fadeIn"
-        );
-        this.keyboard.addButtonTheme(
-          guessedLetters.found.map((name) => name.toUpperCase()).join(" "),
-          "is-success animate__animated animate__fadeIn"
-        );
-        this.keyboard.addButtonTheme(
-          guessedLetters.hint.map((name) => name.toUpperCase()).join(" "),
-          "is-warning animate__animated animate__fadeIn"
-        );
+        if (guessedLetters) {
+          console.log(guessedLetters);
+          this.keyboard.addButtonTheme(
+            guessedLetters.miss.map((name) => name.toUpperCase()).join(" "),
+            "is-dark animate__animated animate__fadeIn"
+          );
+          this.keyboard.addButtonTheme(
+            guessedLetters.found.map((name) => name.toUpperCase()).join(" "),
+            "is-success animate__animated animate__fadeIn"
+          );
+          this.keyboard.addButtonTheme(
+            guessedLetters.hint.map((name) => name.toUpperCase()).join(" "),
+            "is-warning animate__animated animate__fadeIn"
+          );
+        } else {
+          this.keyboard.clearInput()
+        }
       },
       deep: true,
     },

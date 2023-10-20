@@ -127,7 +127,11 @@
               </div>
             </div>
           </div>
-          <button class="button is-fullwidth is-primary mt-5" @click="restartGame">
+          <button
+            class="button is-fullwidth is-primary mt-5"
+            v-if="this.$store.state.isFinished && this.$store.state.gameOver"
+            @click="restartGame"
+          >
             Давом этиш
           </button>
         </section>
@@ -158,7 +162,7 @@ export default {
   async beforeMount() {
     const token = useCookies().get("token");
     await axios
-      .get("/statistics/statistics/unlimited-game/", {
+      .get("/statistics/unlimited-game/", {
         headers: {
           Authorization: `Token ${token}`,
         },
