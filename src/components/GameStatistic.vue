@@ -10,12 +10,12 @@
           class="modal-card-body rounded-md dark:bg-[#252525] dark:border-[#3c3c3c]"
         >
           <i
-            class="fas fa-times float-right text-[16px] cursor-pointer text-black dark:text-white"
-            @click="removeStat()"
+            class="fas fa-times float-right text-black cursor-pointer dark:text-white"
+            @click="removeStat"
           ></i>
 
           <h1
-            class="pb-3 text-black font-bold text-sm uppercase tracking-[.1em] dark:text-white"
+            class="text-black text-[19px] font-medium flex items-center justify-center dark:text-white"
           >
             Статистика
           </h1>
@@ -59,74 +59,74 @@
                 Guess Distribution
               </h1>
               <div class="tables pt-2">
-                <div class="first pb-2 flex items-center justify-start gap-1">
+                <div class="pb-2 flex items-center justify-start gap-1">
                   <p
                     class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
                   >
                     1
                   </p>
                   <p
-                    class="w-[290px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                    class="first flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
-                    3
+                    {{ userStats.wins_attempts_count[1] }}
                   </p>
                 </div>
-                <div class="secon pb-2 flex items-center justify-start gap-1">
+                <div class="pb-2 flex items-center justify-start gap-1">
                   <p
                     class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
                   >
                     2
                   </p>
                   <p
-                    class="w-[96px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                    class="second flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
-                    1
+                    {{ userStats.wins_attempts_count[2] }}
                   </p>
                 </div>
-                <div class="third pb-2 flex items-center justify-start gap-1">
+                <div class="pb-2 flex items-center justify-start gap-1">
                   <p
                     class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
                   >
                     3
                   </p>
                   <p
-                    class="w-[192px] flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                    class="third flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
-                    2
+                    {{ userStats.wins_attempts_count[3] }}
                   </p>
                 </div>
-                <div class="fourth pb-2 flex items-center justify-start gap-1">
+                <div class="pb-2 flex items-center justify-start gap-1">
                   <p
                     class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
                   >
                     4
                   </p>
                   <p
-                    class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                    class="fourth flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
-                    0
+                    {{ userStats.wins_attempts_count[4] }}
                   </p>
                 </div>
-                <div class="fifth pb-2 flex items-center justify-start gap-1">
+                <div class="pb-2 flex items-center justify-start gap-1">
                   <p
                     class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
                   >
                     5
                   </p>
                   <p
-                    class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                    class="fifth flex justify-end pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
-                    0
+                    {{ userStats.wins_attempts_count[5] }}
                   </p>
                 </div>
-                <div class="sixth flex items-center justify-start gap-1">
+                <div class="flex items-center justify-start gap-1">
                   <p
                     class="text-black font-bold text-[12px] leading-5 tracking-widest dark:text-white"
                   >
                     6
                   </p>
                   <p
-                    class="pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
+                    class="sixth pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
                     0
                   </p>
@@ -174,6 +174,7 @@ export default {
   },
   async beforeMount() {
     await this.getStats();
+    this.distLenght();
   },
   mounted() {
     this.timer();
@@ -270,6 +271,57 @@ export default {
     },
     removeStat() {
       this.$store.state.isFinished = false;
+    },
+    distLenght() {
+      const first = document.querySelector(".first");
+      const second = document.querySelector(".second");
+      const third = document.querySelector(".third");
+      const fourth = document.querySelector(".fourth");
+      const fifth = document.querySelector(".fifth");
+      const sixth = document.querySelector(".sixth");
+
+      if (this.userStats.wins_attempts_count[1] >= 3) {
+        first.classList.add("w-[96px]");
+      } else if (this.userStats.wins_attempts_count[1] >= 6) {
+        first.classList.add("w-[192px]");
+      } else if (this.userStats.wins_attempts_count[1] >= 10) {
+        first.classList.add("w-[290px]");
+      }
+      if (this.userStats.wins_attempts_count[2] >= 3) {
+        second.classList.add("w-[96px]");
+      } else if (this.userStats.wins_attempts_count[2] >= 6) {
+        second.classList.add("w-[192px]");
+      } else if (this.userStats.wins_attempts_count[2] >= 10) {
+        second.classList.add("w-[290px]");
+      }
+      if (this.userStats.wins_attempts_count[3] >= 3) {
+        third.classList.add("w-[96px]");
+      } else if (this.userStats.wins_attempts_count[3] >= 6) {
+        third.classList.add("w-[192px]");
+      } else if (this.userStats.wins_attempts_count[3] >= 10) {
+        third.classList.add("w-[290px]");
+      }
+      if (this.userStats.wins_attempts_count[4] >= 3) {
+        fourth.classList.add("w-[96px]");
+      } else if (this.userStats.wins_attempts_count[4] >= 6) {
+        fourth.classList.add("w-[192px]");
+      } else if (this.userStats.wins_attempts_count[4] >= 10) {
+        fourth.classList.add("w-[290px]");
+      }
+      if (this.userStats.wins_attempts_count[5] >= 3) {
+        fifth.classList.add("w-[96px]");
+      } else if (this.userStats.wins_attempts_count[5] >= 6) {
+        fifth.classList.add("w-[192px]");
+      } else if (this.userStats.wins_attempts_count[5] >= 10) {
+        fifth.classList.add("w-[290px]");
+      }
+      if (this.userStats.wins_attempts_count[6] >= 3) {
+        sixth.classList.add("w-[96px]");
+      } else if (this.userStats.wins_attempts_count[6] >= 6) {
+        sixth.classList.add("w-[192px]");
+      } else if (this.userStats.wins_attempts_count[6] >= 10) {
+        sixth.classList.add("w-[290px]");
+      }
     },
     calcTimer(countDownDate) {
       // Get today's date and time

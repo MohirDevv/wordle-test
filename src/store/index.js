@@ -2555,7 +2555,7 @@ export default createStore({
     ],
     lastSubmitted: "",
     isWinner: null,
-    isFinished: null,
+    isFinished: false,
     unlimStats: null,
     SettingStatus: false,
     isAuth: false,
@@ -2704,6 +2704,13 @@ export default createStore({
         state.unlimGuesses[payload.i] = payload.word;
         state.unlimColorList[payload.i] = payload.colors;
         state.unlimCurrentGuessIndex = payload.i + 1;
+
+        if (payload.colors.join("") == "11111" || payload.i == 5) {
+          console.log("Success");
+          state.isFinished = true;
+          state.gameOver = true;
+          state.unlimCurrentGuessIndex = payload.i;
+        }
 
         for (let i = 0; i < payload.colors.length; i++) {
           // miss

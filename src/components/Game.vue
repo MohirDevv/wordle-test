@@ -94,13 +94,16 @@ export default {
     });
     document.title = "Wordle";
     this.$store.state.useWebsocket.onmessage = this.onSocketMessage;
+    this.$store.state.useWebsocket.onclose = this.onSocketClose;
   },
   unmounted() {
-    window.removeEventListener("keypress", () =>
-      this.onKeyPress(button.toLowerCase())
-    );
+    window.removeEventListener("keypress", () => this.onKeyPress());
   },
   methods: {
+    onSocketClose() {
+      console.log("Removed");
+      window.removeEventListener("keypress", () => this.onKeyPress());
+    },
     async onSocketMessage(evt) {
       this.$store.state.submitted = false;
       const state = this.$store.state;
@@ -112,7 +115,7 @@ export default {
       console.log(res);
       console.log(res.message);
       if (!value) {
-        var word;
+        var word = "";
         for (const key in res.message) {
           if (res.message.hasOwnProperty(key) && key != "correct_word") {
             word = key;
@@ -126,6 +129,7 @@ export default {
       console.log(state.guesses[index]);
       if (res.is_won || res.is_won == false) {
         console.log("Finished");
+        console.log(this.$store.state.guesses)
         state.gameOver = true;
         setTimeout(() => {
           state.isFinished = true;
@@ -142,7 +146,7 @@ export default {
           position: "top-center",
         });
       } else if (checked) {
-        state.currentGuessIndex++;
+        if (state.currentGuessIndex < 5) state.currentGuessIndex++;
         for (let i = 0; i < 5; i++) {
           console.log(res.message);
           console.log(state.colorList);
@@ -185,88 +189,82 @@ export default {
       const cookies = useCookies();
     },
     async getWords() {
-      const now = new Date();
-      const start = new Date(2022, 7, 23);
-      const diff = Number(now) - Number(start);
-      let state = this.$store.state;
-      // console.log(localStorage.getItem("color"));
-      let day = Math.floor(diff / (1000 * 60 * 60 * 24));
-      // console.log(day);
-      if (state.today < day) {
-        let formData = {
-          today: day,
-          current_guess_index: 0,
-          color_list: JSON.stringify([
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-          ]),
-          guessed_letters: JSON.stringify({
-            miss: [],
-            found: [],
-            hint: [],
-          }),
-          guesses: JSON.stringify(["", "", "", "", "", ""]),
-          last_submitted: "",
-          user_tries: JSON.stringify([
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-          ]),
-          is_finished: false,
-        };
+      // const now = new Date();
+      // const start = new Date(2022, 7, 23);
+      // const diff = Number(now) - Number(start);
+      // let state = this.$store.state;
+      // // console.log(localStorage.getItem("color"));
+      // let day = Math.floor(diff / (1000 * 60 * 60 * 24));
+      // // console.log(day);
+      // if (state.today < day) {
+      //   let formData = {
+      //     today: day,
+      //     current_guess_index: 0,
+      //     color_list: JSON.stringify([
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //     ]),
+      //     guessed_letters: JSON.stringify({
+      //       miss: [],
+      //       found: [],
+      //       hint: [],
+      //     }),
+      //     guesses: JSON.stringify(["", "", "", "", "", ""]),
+      //     last_submitted: "",
+      //     user_tries: JSON.stringify([
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //     ]),
+      //     is_finished: false,
+      //   };
 
-        var telegram_id = this.$route.params.telegram_id;
+      //   var telegram_id = this.$route.params.telegram_id;
 
-        await axios
-          .put(`api/v1/daily-statistics/${telegram_id}`, formData)
-          .then((response) => {
-            console.log(response.data);
+      //   await axios
+      //     .put(`api/v1/daily-statistics/${telegram_id}`, formData)
+      //     .then((response) => {
+      //       console.log(response.data);
 
-            let responseData = response.data;
-            state.today = responseData.today;
+      //       let responseData = response.data;
+      //       state.today = responseData.today;
 
-            // getting data
-            state.guesses = JSON.parse(responseData.guesses);
-            state.colorList = JSON.parse(responseData.color_list);
-            state.currentGuessIndex = responseData.current_guess_index;
-            state.guessedLetters = JSON.parse(responseData.guessed_letters);
-            state.isFinished = responseData.is_finished;
-            state.lastSubmitted = responseData.last_submitted;
-            (state.userTries = JSON.parse(responseData.user_tries)),
-              // force render Keyboar comp.
-              (this.componentKey += 1);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-      while (day > this.$store.state.words_list.length) {
-        day -= this.$store.state.words_list.length;
-      }
-      // console.log(this.$store.state.words_list[day]);
-      // console.log(state.currentGuessIndex);
-      this.$store.state.solution = this.$store.state.words_list[day];
-      return this.$store.state.words_list[day];
+      //       // getting data
+      //       state.guesses = JSON.parse(responseData.guesses);
+      //       state.colorList = JSON.parse(responseData.color_list);
+      //       state.currentGuessIndex = responseData.current_guess_index;
+      //       state.guessedLetters = JSON.parse(responseData.guessed_letters);
+      //       state.isFinished = responseData.is_finished;
+      //       state.lastSubmitted = responseData.last_submitted;
+      //       (state.userTries = JSON.parse(responseData.user_tries)),
+      //         // force render Keyboar comp.
+      //         (this.componentKey += 1);
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //     });
+      // }
+      // while (day > this.$store.state.words_list.length) {
+      //   day -= this.$store.state.words_list.length;
+      // }
+      // // console.log(this.$store.state.words_list[day]);
+      // // console.log(state.currentGuessIndex);
+      // this.$store.state.solution = this.$store.state.words_list[day];
+      // return this.$store.state.words_list[day];
     },
     onKeyPress(button) {
       const guesses = this.$store.state.guesses;
       const currentGuessIndex = this.$store.state.currentGuessIndex;
       console.log(currentGuessIndex);
       const currentGuess = guesses[currentGuessIndex];
-      if (!this.$store.state.isFinished) {
-        if (
-          currentGuessIndex >= 6 ||
-          this.$store.state.lastSubmitted == this.$store.state.solution
-        ) {
-          return;
-        }
+      if (!this.$store.state.isFinished && !this.$store.state.gameOver) {
         if (button == "{enter}") {
           if (currentGuess && currentGuess.length == 5) {
             this.$store.state.submitted = true;

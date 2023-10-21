@@ -5,7 +5,6 @@
       :class="{ 'animate__animated animate__shakeX': isActive }"
     >
       <Letter
-        v-if="value != undefined && value <= 5"
         v-for="i in 5"
         :key="i"
         :letter="value[i - 1]"

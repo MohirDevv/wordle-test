@@ -8,17 +8,22 @@
       <section
         class="modal-card-body bg-white dark:bg-[#252525] dark:border-[#3c3c3c]"
       >
-      <i
+        <i
           class="fas fa-times float-right text-black cursor-pointer dark:text-white"
           @click="removeSettings()"
-          ></i>
+        ></i>
         <div class="sideHeader flex items-center justify-center">
-          <h1 class="text-black text-[19px] font-medium flex items-center justify-center dark:text-white">Созламалар</h1>
-          
+          <h1
+            class="text-black text-[19px] font-medium flex items-center justify-center dark:text-white"
+          >
+            Созламалар
+          </h1>
         </div>
-        <h1 class="text-black pt-2 dark:text-white">Тунги режими</h1>
+        <h1 class="text-black pt-2 dark:text-white">Тунги режим</h1>
         <div class="darkmodes pl-[10px] pt-2">
-          <label class="label flex items-center justify-between">
+          <label
+            class="label py-[4px] mb-0 flex items-center justify-between border-[#787c7e] border-t-[2px] dark:border-[#3a3a3c]"
+          >
             <span
               class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white"
               >Тун режими</span
@@ -32,7 +37,9 @@
             />
             <span class="fake"></span>
           </label>
-          <label class="label flex items-center justify-between">
+          <label
+            class="label py-[4px] flex items-center justify-between border-[#787c7e] border-t-[1px] border-b-[2px] dark:border-[#3a3a3c]"
+          >
             <span
               class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white"
               >Кун режими</span
@@ -49,13 +56,21 @@
         </div>
         <h1 class="text-black pt-2 dark:text-white">Ўйин режими</h1>
         <div class="routePart pl-[10px] pt-2">
-          <router-link to="/" class="flex justify-between items-center pb-3">
+          <router-link
+            to="/"
+            class="py-[4px] border-[#787c7e] border-t-[2px] flex justify-between items-center dark:border-[#3a3a3c]"
+            @click="isRedirected"
+          >
             <span class="text-[18px] font-semibold text-black dark:text-white"
               >Ҳар кунлик</span
             >
             <div v-if="route.name == 'Game'" class="">✔️</div>
           </router-link>
-          <router-link to="/unlim" class="flex justify-between items-center">
+          <router-link
+            to="/unlim"
+            class="py-[4px] border-[#787c7e] border-t-[1px] border-b-[2px] flex justify-between items-center dark:border-[#3a3a3c]"
+            @click="isRedirected"
+          >
             <span class="text-[18px] font-semibold text-black dark:text-white"
               >Ютқазгунча</span
             >
@@ -82,12 +97,10 @@ const route = useRoute();
 const router = useRouter();
 
 const theme = localStorage.getItem("vueuse-color-scheme");
-const redirectToPage = () => {
-  if (selectedPage.value) {
-    console.log(selectedPage.value);
-    router.push({ path: `/unlim` });
-  }
-};
+
+function isRedirected() {
+  store.state.SettingStatus = false;
+}
 function removeSettings() {
   store.state.SettingStatus = false;
 }
@@ -119,7 +132,10 @@ function removeSettings() {
 .checkbox:checked + .fake::before {
   opacity: 1;
 }
-
+.sideHeader h1 {
+  font-weight: 700;
+  font-size: 18px;
+}
 .modal-card {
   max-width: 500px !important;
 }

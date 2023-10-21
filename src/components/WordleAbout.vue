@@ -10,8 +10,12 @@
           class="fas fa-times float-right text-[16px] cursor-pointer text-black dark:text-white"
           @click="removeAbout()"
         ></i>
-        <div class="instruction pt-2">
-          <p><strong class="dark:text-white">Ўйин қоидалари</strong></p>
+        <h1
+          class="text-black text-[19px] font-medium flex items-center justify-center dark:text-white"
+        >
+          Ўйин қоидалари
+        </h1>
+        <div class="instruction">
           <br />
           <p class="dark:text-white">
             6 та уринишда кун
@@ -150,8 +154,8 @@ export default {
   line-height: 35px;
 }
 
-.animate__animated.animate__flipInX{
-  animation-delay: .3s;
+.animate__animated.animate__flipInX {
+  animation-delay: 0.3s;
   /* --animate-duration: 1.1s; */
 }
 @media only screen and (max-width: 500px) {

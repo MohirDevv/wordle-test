@@ -1,11 +1,12 @@
 <template>
   <div class="wrapper">
     <Header />
-    <UnlimSettings />
+    <Settings/>
     <UnlimGameStatistic
       :gameOver="this.$store.state.gameOver"
       @get-words="getWords"
       @change-key="changeKey"
+      @restartGame="restartGame()"
     />
     <About />
     <div class="">
@@ -39,10 +40,12 @@
 import Header from "../WordleHeader.vue";
 import UnlimWordRow from "./UnlimWordRow.vue";
 import KeyBoard from "./UnlimKeyBoard.vue";
-import UnlimSettings from "./UnlimitedSettings.vue";
+import Settings from "../WordleSettings.vue";
 import About from "../WordleAbout.vue";
 import UnlimGameStatistic from "./UnlimGameStatistic.vue";
 import { toast } from "bulma-toast";
+import { useCookies } from "@vueuse/integrations/useCookies";
+
 
 export default {
   name: "Unlimited",
@@ -52,7 +55,7 @@ export default {
     UnlimWordRow,
     About,
     UnlimGameStatistic,
-    UnlimSettings,
+    Settings,
   },
   data() {
     return {
@@ -61,6 +64,9 @@ export default {
   },
   beforeMount() {
     this.getWords();
+  },
+  unmounted() {
+    window.removeEventListener("keypress", () => this.onSocketClose());
   },
   mounted() {
     if (!localStorage.getItem("startedAt")) {
@@ -85,8 +91,17 @@ export default {
     });
     document.title = "Wordle";
     this.$store.state.useWebsocket.onmessage = this.onSocketMessage;
+    this.$store.state.useWebsocket.onclose = this.onSocketClose;
   },
   methods: {
+    async restartGame() {
+      this.$store.commit("unlimInitializeValue");
+      this.$store.state.isFinished = false;
+    },
+    onSocketClose() {
+      console.log("Removed");
+      window.removeEventListener("keypress", () => this.onKeyPress());
+    },
     async onSocketMessage(evt) {
       this.$store.state.submitted = false;
       const state = this.$store.state;
@@ -98,7 +113,7 @@ export default {
       console.log(res);
       console.log(res.message);
       if (!value) {
-        var word;
+        var word = "";
         for (const key in res.message) {
           if (res.message.hasOwnProperty(key) && key != "correct_word") {
             word = key;
@@ -110,9 +125,19 @@ export default {
       const checked = res.message[value];
       console.log(checked);
       console.log(state.unlimGuesses[index]);
-      if (checked) {
-        this.$store.state.unlimCurrentGuessIndex++;
+      if (res.is_won || res.is_won == false) {
+        console.log("Finished");
+        state.gameOver = true;
+        setTimeout(() => {
+          state.isFinished = true;
+        }, 2500);
+      } else if (checked) {
+        if (state.unlimCurrentGuessIndex < 5) state.unlimCurrentGuessIndex++;
+        if (state.unlimCurrentGuessIndex >= 6) {
+          state.isFinished = true;
+        }
         for (let i = 0; i < 5; i++) {
+          console.log(res.message[value][i]);
           state.unlimColorList[index][i] = res.message[value][i];
 
           await new Promise((resolve) => setTimeout(resolve, 500));
@@ -152,61 +177,53 @@ export default {
           duration: 2000,
           position: "top-center",
         });
-      } else if (res.is_won || res.is_won == false) {
-        console.log("Finished");
-        state.gameOver = true;
-        setTimeout(() => {
-          state.isFinished = true;
-        }, 2500);
       }
     },
     getWords() {
-      if (
-        localStorage.getItem("unlimIsNewUser") == "true" ||
-        localStorage.getItem("unlimFinished") == "true"
-      ) {
-        (this.$store.state.unlimGuesses = ["", "", "", "", "", ""]),
-          (this.$store.state.unlimColorList = [
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-            ["", "", "", "", ""],
-          ]),
-          (this.$store.state.unlimGuessedLetters = {
-            miss: [],
-            found: [],
-            hint: [],
-          }),
-          // (this.$store.state.unlimCurrentGuessIndex = 0);
-
-          localStorage.setItem(
-            "unlimCurrentGuessIndex",
-            this.$store.state.unlimCurrentGuessIndex
-          );
-        localStorage.setItem(
-          "unlimGuesses",
-          JSON.stringify(this.$store.state.unlimGuesses)
-        );
-        localStorage.setItem(
-          "unlimColor",
-          JSON.stringify(this.$store.state.unlimColorList)
-        );
-        localStorage.setItem(
-          "unlimGuessedLetters",
-          JSON.stringify(this.$store.state.unlimGuessedLetters)
-        );
-        localStorage.setItem("unlimFinished", false);
-        localStorage.getItem("unlimIsNewUser", false);
-
-        var num = Math.floor(Math.random() * 2001);
-        this.$store.state.unlimSolution = this.$store.state.words_list[num];
-        console.log(this.$store.state.unlimSolution);
-        localStorage.setItem("unlimSolution", this.$store.state.unlimSolution);
-        console.log(this.$store.state.words_list[num]);
-        return this.$store.state.words_list[num];
-      }
+      // if (
+      //   localStorage.getItem("unlimIsNewUser") == "true" ||
+      //   localStorage.getItem("unlimFinished") == "true"
+      // ) {
+      //   (this.$store.state.unlimGuesses = ["", "", "", "", "", ""]),
+      //     (this.$store.state.unlimColorList = [
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //       ["", "", "", "", ""],
+      //     ]),
+      //     (this.$store.state.unlimGuessedLetters = {
+      //       miss: [],
+      //       found: [],
+      //       hint: [],
+      //     }),
+      //     // (this.$store.state.unlimCurrentGuessIndex = 0);
+      //     localStorage.setItem(
+      //       "unlimCurrentGuessIndex",
+      //       this.$store.state.unlimCurrentGuessIndex
+      //     );
+      //   localStorage.setItem(
+      //     "unlimGuesses",
+      //     JSON.stringify(this.$store.state.unlimGuesses)
+      //   );
+      //   localStorage.setItem(
+      //     "unlimColor",
+      //     JSON.stringify(this.$store.state.unlimColorList)
+      //   );
+      //   localStorage.setItem(
+      //     "unlimGuessedLetters",
+      //     JSON.stringify(this.$store.state.unlimGuessedLetters)
+      //   );
+      //   localStorage.setItem("unlimFinished", false);
+      //   localStorage.getItem("unlimIsNewUser", false);
+      //   var num = Math.floor(Math.random() * 2001);
+      //   this.$store.state.unlimSolution = this.$store.state.words_list[num];
+      //   console.log(this.$store.state.unlimSolution);
+      //   localStorage.setItem("unlimSolution", this.$store.state.unlimSolution);
+      //   console.log(this.$store.state.words_list[num]);
+      //   return this.$store.state.words_list[num];
+      // }
     },
     changeKey() {
       this.componentKey += 1;
@@ -265,7 +282,7 @@ export default {
       } else if (button == "{bksp}") {
         guesses[currentGuessIndex] = currentGuess.slice(0, -1);
       } else if (currentGuess.length < 5) {
-        const alphaRegex = /[а-яА-Я,Ғ,Ҳ,Қ,Ё,Ў,ғ,ҳ,қ,ё,ў]/;
+        const alphaRegex = /[а-яА-ЯҒҲҚЁЎғҳқёў]/;
         if (alphaRegex.test(button)) {
           guesses[currentGuessIndex] += button;
         }

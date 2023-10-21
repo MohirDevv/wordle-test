@@ -84,8 +84,8 @@ export default {
   watch: {
     guessedLetters: {
       handler(guessedLetters) {
+        console.log(guessedLetters);
         if (guessedLetters) {
-          console.log(guessedLetters);
           this.keyboard.addButtonTheme(
             guessedLetters.miss.map((name) => name.toUpperCase()).join(" "),
             "is-dark animate__animated animate__fadeIn"
@@ -98,8 +98,45 @@ export default {
             guessedLetters.hint.map((name) => name.toUpperCase()).join(" "),
             "is-warning animate__animated animate__fadeIn"
           );
-        } else {
-          this.keyboard.clearInput()
+
+          if (
+            !guessedLetters.miss.length &&
+            !guessedLetters.found.length &&
+            !guessedLetters.hint.length
+          ) {
+            console.log("Hello");
+            this.keyboard.dispatch((instance) => {
+              instance.setOptions({
+                buttonTheme: [
+                  {
+                    class: "key-bg",
+                    buttons:
+                      "Ё Й Ц У К Е Н Г Ш Ў З Х Ъ Ф Қ В А П Р О Л Д Ж Э Я Ч С М И Т Ь Б Ю Ғ Ҳ {bksp} {enter}",
+                  },
+                  {
+                    class: "bksp",
+                    buttons: "{bksp}",
+                  },
+                  {
+                    class: "is-success",
+                    buttons: "{enter}",
+                  },
+                  {
+                    class: "df-dark",
+                    buttons: "",
+                  },
+                  {
+                    class: "df-success",
+                    buttons: "",
+                  },
+                  {
+                    class: "df-warning",
+                    buttons: "",
+                  },
+                ],
+              });
+            });
+          }
         }
       },
       deep: true,
