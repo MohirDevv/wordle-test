@@ -1,6 +1,7 @@
 <template>
   <div
     class="letter-border has-text-centered has-text-weight-bold dark:border-[#3a3a3c] dark:text-white"
+    
     :class="{
       'border-gray-500': color == '' && letter.length > 0,
       '': !pulse,

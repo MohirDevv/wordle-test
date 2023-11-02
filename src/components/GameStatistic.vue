@@ -19,44 +19,57 @@
           >
             Статистика
           </h1>
-          <div class="wrapper" v-if="userStats">
-            <div class="stats flex items-start justify-center flex-col py-4">
+          <div class="wrapper flex flex-col" v-if="userStats">
+            <div class="stats flex items-start justify-start flex-col py-4">
               <div
-                class="info sm:w-[20rem] w-[17rem] flex items-center justify-evenly"
+                class="info sm:w-[20rem] w-[17rem] flex items-start justify-evenly flex-col"
               >
-                <div class="played flex items-center justify-center flex-col">
+                <div
+                  class="w-[100%] played flex items-center justify-between gap-9"
+                >
+                  <p class="text-black text-[18px] font-medium dark:text-white">
+                    Ўйналган ўйинлар
+                  </p>
                   <h1 class="text-[25px] text-black dark:text-white">
                     {{ userStats.games_count }}
                   </h1>
-                  <p class="text-black text-[13px] dark:text-white">Played</p>
                 </div>
-
-                <div class="winrate flex items-center justify-center flex-col">
+                <div
+                  class="w-[100%] played flex items-center justify-between gap-9"
+                >
+                  <p class="text-black text-[18px] font-medium dark:text-white">
+                    Ғалаба
+                  </p>
                   <h1 class="text-[25px] text-black dark:text-white">
                     {{ userStats.wins_percent }}%
                   </h1>
-                  <p class="text-black text-[13px] dark:text-white">Win%</p>
                 </div>
-                <div class="winrate flex items-center justify-center flex-col">
+                <div
+                  class="w-[100%] played flex items-center justify-between gap-9"
+                >
+                  <p class="text-black text-[18px] font-medium dark:text-white">
+                    Кетма-кет ғалаба
+                  </p>
                   <h1 class="text-[25px] text-black dark:text-white">
                     {{ userStats.consecutive_wins_count }}
                   </h1>
-                  <p class="text-black text-[13px] dark:text-white">Streak</p>
                 </div>
-                <div class="winrate flex items-center justify-center flex-col">
+                <div
+                  class="w-[100%] played flex items-center justify-between gap-9"
+                >
+                  <p class="text-black text-[18px] font-medium dark:text-white">
+                    Кетма-кет ғалабалар рекорди
+                  </p>
                   <h1 class="text-[25px] text-black dark:text-white">
                     {{ userStats.consecutive_wins_record_count }}
                   </h1>
-                  <p class="text-black text-[13px] dark:text-white">
-                    Max Streak
-                  </p>
                 </div>
               </div>
             </div>
 
             <div class="guessInfo">
               <h1 class="uppercase text-black font-bold dark:text-white">
-                Guess Distribution
+                ТАХМИНЛАР ТАҚСИМОТИ
               </h1>
               <div class="tables pt-2">
                 <div class="pb-2 flex items-center justify-start gap-1">
@@ -128,7 +141,7 @@
                   <p
                     class="sixth pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
-                    0
+                  {{ userStats.wins_attempts_count[6] }}
                   </p>
                 </div>
               </div>

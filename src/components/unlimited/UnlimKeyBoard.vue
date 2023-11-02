@@ -104,7 +104,6 @@ export default {
             !guessedLetters.found.length &&
             !guessedLetters.hint.length
           ) {
-            console.log("Hello");
             this.keyboard.dispatch((instance) => {
               instance.setOptions({
                 buttonTheme: [

@@ -97,6 +97,7 @@ export default {
     async restartGame() {
       this.$store.commit("unlimInitializeValue");
       this.$store.state.isFinished = false;
+      this.$store.state.gameOver = false;
     },
     onSocketClose() {
       console.log("Removed");

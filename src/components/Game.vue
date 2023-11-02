@@ -18,6 +18,7 @@
             this.$store.state.lastSubmitted != guess
           "
           :temp_colors="this.$store.state.colorList[i]"
+          :is_found="isFound"
         />
       </div>
       <div class="is-centered">
@@ -34,7 +35,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { useCookies } from "@vueuse/integrations/useCookies";
 import Header from "./WordleHeader.vue";
 import WordRow from "./WordRow.vue";
@@ -44,7 +44,6 @@ import Settings from "./WordleSettings.vue";
 import GameStatistic from "./GameStatistic.vue";
 import Ads from "./WordleAds.vue";
 import { toast } from "bulma-toast";
-import store from "../store";
 
 export default {
   name: "Game",
@@ -59,6 +58,7 @@ export default {
   },
   data() {
     return {
+      isFound: false,
       input: "",
       guessedLetters: {
         miss: [],
@@ -66,10 +66,6 @@ export default {
         hint: [],
       },
       componentKey: 0,
-      sockets_bay_api_key: "",
-      connection_ready: false,
-      connection_error: false,
-      websocket: null,
     };
   },
   async beforeMount() {
@@ -101,7 +97,7 @@ export default {
   },
   methods: {
     onSocketClose() {
-      console.log("Removed");
+      // console.log("Removed");
       window.removeEventListener("keypress", () => this.onKeyPress());
     },
     async onSocketMessage(evt) {
@@ -133,6 +129,7 @@ export default {
         state.gameOver = true;
         setTimeout(() => {
           state.isFinished = true;
+          if (res.is_won) this.isFound = true;
         }, 2500);
       } else if (res.type == "error") {
         this.$store.state.lastSubmitted = "";
@@ -262,7 +259,6 @@ export default {
     onKeyPress(button) {
       const guesses = this.$store.state.guesses;
       const currentGuessIndex = this.$store.state.currentGuessIndex;
-      console.log(currentGuessIndex);
       const currentGuess = guesses[currentGuessIndex];
       if (!this.$store.state.isFinished && !this.$store.state.gameOver) {
         if (button == "{enter}") {

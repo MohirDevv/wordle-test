@@ -79,7 +79,7 @@ export default function auth({ to, next, store }) {
       mode = "unlimited";
     }
 
-    var sockets_bay_url = `ws://cp.wordle.uz:8000/ws/game/${mode}?token=${token}`;
+    var sockets_bay_url = `wss://cp.wordle.uz:8000/ws/game/${mode}?token=${token}`;
     websocket = new WebSocket(sockets_bay_url);
     store.state.useWebsocket = websocket;
     console.log(store.state.useWebsocket);

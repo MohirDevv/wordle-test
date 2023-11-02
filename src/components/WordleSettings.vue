@@ -22,10 +22,10 @@
         <h1 class="text-black pt-2 dark:text-white">Тунги режим</h1>
         <div class="darkmodes pl-[10px] pt-2">
           <label
-            class="label py-[4px] mb-0 flex items-center justify-between border-[#787c7e] border-t-[2px] dark:border-[#3a3a3c]"
+            class="label py-[4px] mb-0 flex items-center justify-between dark:border-[#3a3a3c]"
           >
             <span
-              class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white"
+              class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white pb-2"
               >Тун режими</span
             >
             <input
@@ -33,15 +33,15 @@
               name="name1"
               class="checkbox"
               :checked="theme === 'auto' || 'dark' ? true : false"
-              @click="toogleDark()"
+              @change="toogleDark()"
             />
             <span class="fake"></span>
           </label>
           <label
-            class="label py-[4px] flex items-center justify-between border-[#787c7e] border-t-[1px] border-b-[2px] dark:border-[#3a3a3c]"
+            class="label py-[4px] flex items-center justify-between border-[#d3d6da] border-t-[1px]  dark:border-[#3a3a3c]"
           >
             <span
-              class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white"
+              class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white pt-2 pb-4"
               >Кун режими</span
             >
             <input
@@ -49,29 +49,29 @@
               name="name1"
               class="checkbox"
               :checked="theme === 'light' ? true : false"
-              @click="toogleDark()"
+              @change="toogleDark()"
             />
             <span class="fake"></span>
           </label>
         </div>
-        <h1 class="text-black pt-2 dark:text-white">Ўйин режими</h1>
+        <h1 class="text-black pt-4 dark:text-white border-t-[5px] border-[d3d6da]">Ўйин режими</h1>
         <div class="routePart pl-[10px] pt-2">
           <router-link
             to="/"
-            class="py-[4px] border-[#787c7e] border-t-[2px] flex justify-between items-center dark:border-[#3a3a3c]"
+            class="py-[4px] border-[#d3d6da]  flex justify-between items-center dark:border-[#3a3a3c]"
             @click="isRedirected"
           >
-            <span class="text-[18px] font-semibold text-black dark:text-white"
+            <span class="text-[18px] font-semibold text-black dark:text-white pb-2"
               >Ҳар кунлик</span
             >
             <div v-if="route.name == 'Game'" class="">✔️</div>
           </router-link>
           <router-link
             to="/unlim"
-            class="py-[4px] border-[#787c7e] border-t-[1px] border-b-[2px] flex justify-between items-center dark:border-[#3a3a3c]"
+            class="py-[4px] border-[#d3d6da] border-t-[1px]  flex justify-between items-center dark:border-[#3a3a3c]"
             @click="isRedirected"
           >
-            <span class="text-[18px] font-semibold text-black dark:text-white"
+            <span class="text-[18px] font-semibold text-black dark:text-white pt-2"
               >Ютқазгунча</span
             >
             <div v-if="route.name == 'Unlimited'" class="">✔️</div>

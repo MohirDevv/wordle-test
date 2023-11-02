@@ -9,7 +9,7 @@
         :key="i"
         :letter="value[i - 1]"
         :color="temp_colors[i - 1]"
-        :id="isFound ? `letter${i}` : ''"
+        :id="is_found ? `letter${i}` : ''"
       />
     </div>
   </div>
@@ -27,6 +27,7 @@ export default {
     solution: String,
     submitted: Boolean,
     temp_colors: Array,
+    is_found: Boolean,
   },
   data() {
     return {
@@ -41,7 +42,6 @@ export default {
         "УДДАЛАДИК",
       ],
       gameOver: false,
-      isFound: false,
     };
   },
   components: {
