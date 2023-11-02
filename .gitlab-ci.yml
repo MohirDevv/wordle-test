@@ -1,16 +1,14 @@
 stages:
   - deploy
+
 deploy_production:
   stage: deploy
-  tags: [proactive]
   script:
-    - rsync -av * /var/www/wordle/front/ --no-perms --no-owner --no-group --omit-dir-times
-    - cd /var/www/wordle/front/
-    - npm install
-    - npm run build
-    # - pm2 restart hotels
+    - rsync -av * /var/www/wordle/wordle-front/ --no-perms --no-owner --no-group --omit-dir-times
+    - cd /var/www/wordle/wordle-front/ && npm install && npm run build
+    - pm2 restart wordle
   environment:
     name: production
-    url: https://wordlebot.uz/
+    url: https://wordle.uz/
   only:
-    - main
+    - master

@@ -60,6 +60,7 @@ export default function auth({ to, next, store }) {
   }
   function onSocketError(evt) {
     isValid = false;
+    console.log(evt);
     console.log("Invalid token");
     redirect();
   }
