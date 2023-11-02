@@ -141,7 +141,7 @@
                   <p
                     class="sixth pl-2 pr-1 bg-[#787c7e] font-bold text-[12px] text-white leading-[18px] dark:bg-[#3a3a3c]"
                   >
-                  {{ userStats.wins_attempts_count[6] }}
+                    {{ userStats.wins_attempts_count[6] }}
                   </p>
                 </div>
               </div>
@@ -336,6 +336,7 @@ export default {
         sixth.classList.add("w-[290px]");
       }
     },
+
     calcTimer(countDownDate) {
       // Get today's date and time
       var now = new Date().getTime();

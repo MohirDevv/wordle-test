@@ -26,7 +26,7 @@
           >
             <span
               class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white pb-2"
-              >Тун режими</span
+              >🌑Тун режими</span
             >
             <input
               type="radio"
@@ -42,7 +42,7 @@
           >
             <span
               class="text text-[18px] font-semibold text-black cursor-pointer dark:text-white pt-2 pb-4"
-              >Кун режими</span
+              >🌕Кун режими</span
             >
             <input
               type="radio"
@@ -54,7 +54,7 @@
             <span class="fake"></span>
           </label>
         </div>
-        <h1 class="text-black pt-4 dark:text-white border-t-[5px] border-[d3d6da]">Ўйин режими</h1>
+        <h1 class="text-black pt-4 dark:text-white border-t-[5px] dark:border-t-[3px] border-[d3d6da]">Ўйин режими</h1>
         <div class="routePart pl-[10px] pt-2">
           <router-link
             to="/"
@@ -62,7 +62,7 @@
             @click="isRedirected"
           >
             <span class="text-[18px] font-semibold text-black dark:text-white pb-2"
-              >Ҳар кунлик</span
+              >🚀Ҳар кунлик</span
             >
             <div v-if="route.name == 'Game'" class="">✔️</div>
           </router-link>
@@ -72,7 +72,7 @@
             @click="isRedirected"
           >
             <span class="text-[18px] font-semibold text-black dark:text-white pt-2"
-              >Ютқазгунча</span
+              >♾Ютқазгунча</span
             >
             <div v-if="route.name == 'Unlimited'" class="">✔️</div>
           </router-link>
